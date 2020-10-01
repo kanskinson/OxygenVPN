@@ -250,14 +250,14 @@
             // CheckForUpdatesToolStripMenuItem
             // 
             this.CheckForUpdatesToolStripMenuItem.Name = "CheckForUpdatesToolStripMenuItem";
-            this.CheckForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.CheckForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.CheckForUpdatesToolStripMenuItem.Text = "Check for updates";
             this.CheckForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.CheckForUpdatesToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -399,6 +399,7 @@
             // 
             this.EditServerPictureBox.BackColor = System.Drawing.SystemColors.Control;
             this.EditServerPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EditServerPictureBox.Image = global::OxygenVPN.Properties.Resources.edit;
             this.EditServerPictureBox.Location = new System.Drawing.Point(3, 3);
             this.EditServerPictureBox.Name = "EditServerPictureBox";
             this.EditServerPictureBox.Size = new System.Drawing.Size(16, 16);
@@ -409,6 +410,7 @@
             // CopyLinkPictureBox
             // 
             this.CopyLinkPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CopyLinkPictureBox.Image = global::OxygenVPN.Properties.Resources.CopyLink;
             this.CopyLinkPictureBox.Location = new System.Drawing.Point(72, 3);
             this.CopyLinkPictureBox.Name = "CopyLinkPictureBox";
             this.CopyLinkPictureBox.Size = new System.Drawing.Size(18, 18);
@@ -419,6 +421,7 @@
             // DeleteServerPictureBox
             // 
             this.DeleteServerPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DeleteServerPictureBox.Image = global::OxygenVPN.Properties.Resources.delete;
             this.DeleteServerPictureBox.Location = new System.Drawing.Point(26, 3);
             this.DeleteServerPictureBox.Name = "DeleteServerPictureBox";
             this.DeleteServerPictureBox.Size = new System.Drawing.Size(16, 16);
@@ -429,6 +432,7 @@
             // SpeedPictureBox
             // 
             this.SpeedPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SpeedPictureBox.Image = global::OxygenVPN.Properties.Resources.speed;
             this.SpeedPictureBox.Location = new System.Drawing.Point(49, 3);
             this.SpeedPictureBox.Name = "SpeedPictureBox";
             this.SpeedPictureBox.Size = new System.Drawing.Size(16, 16);
@@ -455,6 +459,7 @@
             // EditModePictureBox
             // 
             this.EditModePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EditModePictureBox.Image = global::OxygenVPN.Properties.Resources.edit;
             this.EditModePictureBox.Location = new System.Drawing.Point(3, 3);
             this.EditModePictureBox.Name = "EditModePictureBox";
             this.EditModePictureBox.Size = new System.Drawing.Size(16, 16);
@@ -465,6 +470,7 @@
             // DeleteModePictureBox
             // 
             this.DeleteModePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DeleteModePictureBox.Image = global::OxygenVPN.Properties.Resources.delete;
             this.DeleteModePictureBox.Location = new System.Drawing.Point(26, 3);
             this.DeleteModePictureBox.Name = "DeleteModePictureBox";
             this.DeleteModePictureBox.Size = new System.Drawing.Size(16, 16);

@@ -43,9 +43,11 @@ namespace OxygenVPN.Controllers
                 LatestVersionUrl = latestRelease.html_url;
                 LatestVersionDownloadUrl = latestRelease.assets[0].browser_download_url;
                 Logging.Info($"Github Lastest Release: {latestRelease.tag_name}");
-                if (VersionUtil.CompareVersion(latestRelease.tag_name, Version) > 0)
+                int compareVer = VersionUtil.CompareVersion(latestRelease.tag_name, Version);
+                if (compareVer > 0)
                 {
                     Logging.Info("New Version Found");
+                    Logging.Info("Ver Compare:"+compareVer);
                     NewVersionFound?.Invoke(this, new EventArgs());
                 }
                 else

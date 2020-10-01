@@ -71,7 +71,7 @@ namespace OxygenVPN.Utils
         public static void deltapall()
         {
             Logging.Info("正在卸载 TUN/TAP 适配器");
-            var installProcess = new Process {StartInfo = {WindowStyle = ProcessWindowStyle.Hidden, FileName = Path.Combine("bin/tap-driver", "deltapall.bat")}};
+            var installProcess = new Process {StartInfo = {WindowStyle = ProcessWindowStyle.Normal, FileName = Path.Combine("bin/tap-driver", "deltapall.bat")}};
             installProcess.Start();
             installProcess.WaitForExit();
             installProcess.Close();
@@ -84,7 +84,7 @@ namespace OxygenVPN.Utils
         {
             Logging.Info("正在安装 TUN/TAP 适配器");
             //安装Tap Driver
-            var installProcess = new Process {StartInfo = {WindowStyle = ProcessWindowStyle.Hidden, FileName = Path.Combine("bin/tap-driver", "addtap.bat")}};
+            var installProcess = new Process {StartInfo = {WindowStyle = ProcessWindowStyle.Normal, FileName = Path.Combine("bin/tap-driver", "addtap.bat")}};
             installProcess.Start();
             installProcess.WaitForExit();
             installProcess.Close();

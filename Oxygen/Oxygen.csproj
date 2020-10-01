@@ -125,6 +125,6 @@
     </ItemGroup>
     <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="xcopy /e /r /y $(SolutionDir)translations\i18N $(TargetDir)i18N\" />
+      <Exec Command="xcopy /e /r /y $(SolutionDir)translations\i18N $(TargetDir)i18N\&#xD;&#xA;xcopy /e /r /y $(SolutionDir)modes\mode $(TargetDir)mode\&#xD;&#xA;xcopy /e /r /y $(SolutionDir)binaries $(TargetDir)bin\" />
     </Target>
 </Project>

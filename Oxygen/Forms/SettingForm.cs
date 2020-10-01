@@ -82,15 +82,11 @@ namespace OxygenVPN.Forms
             i18N.TranslateForm(this);
         }
 
-        private void InitSTUN()
-        {
-            try
-            {
+        private void InitSTUN() {
+            try {
                 var stuns = File.ReadLines("bin\\stun.txt");
                 STUN_ServerComboBox.Items.AddRange(stuns.ToArray());
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 // ignored
             }
 
