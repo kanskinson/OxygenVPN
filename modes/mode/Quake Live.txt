@@ -1,0 +1,2 @@
+# Quake Live
+quakelive_steam.exe

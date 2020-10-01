@@ -1,0 +1,2 @@
+# Natural Selection 2
+NS2.exe

@@ -1,0 +1,9 @@
+# Arma3, 0
+arma3.exe
+arma3battleye.exe
+arma3launcher.exe
+arma3server.exe
+arma3server_x64.exe
+arma3_x64.exe
+BEService.exe
+BEService_x64.exe

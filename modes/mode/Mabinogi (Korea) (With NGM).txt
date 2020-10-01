@@ -1,0 +1,9 @@
+# Mabinogi (Korea) (With NGM), 0
+Client.exe
+Mabinogi.exe
+NGM.exe
+NGCLIENT.AES
+NexonPlug.exe
+NMService.exe
+NGM64.exe
+SIG.exe

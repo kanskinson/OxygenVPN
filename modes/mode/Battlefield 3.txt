@@ -1,0 +1,11 @@
+# BF3
+bf3.exe
+BF3WebHelper.exe
+pbsvc.exe
+Cleanup.exe
+Touchup.exe
+DXSETUP.exe
+activation.exe
+EACoreServer.exe
+EAProxyInstaller.exe
+PatchProgress.exe

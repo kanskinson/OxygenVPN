@@ -1,0 +1,3 @@
+# GTFO, 0
+GTFO.exe
+UnityCrashHandler64.exe

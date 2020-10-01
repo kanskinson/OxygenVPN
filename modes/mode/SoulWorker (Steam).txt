@@ -1,0 +1,6 @@
+# SoulWorker (Steam ver.), 0
+awesomium_process.exe
+DumpReport.exe
+SoulWorker.exe
+SWLoading.exe
+steamwebhelper.exe

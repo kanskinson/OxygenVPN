@@ -1,0 +1,10 @@
+# Warthunder, 0
+bpreport.exe
+gaijin_downloader.exe
+gjagent.exe
+launcher.exe
+aces.exe
+cefprocess.exe
+eac_launcher.exe
+WarThunderLauncher_1.0.3.177_updODSPALIJ.exe
+EasyAntiCheat_Setup.exe

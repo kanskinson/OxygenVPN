@@ -1,0 +1,85 @@
+name: Netch CI
+on: [push, pull_request]
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v1
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.1
+
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Restore NuGet Packages Cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('Netch/Netch.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: Restore NuGet Package
+      run: nuget restore Netch.sln
+
+    - name: Build Solution
+      shell: pwsh
+      run: |
+        .\BUILD.ps1
+        New-Item -ItemType Directory -Path C:\builtfiles -Force > $null
+        7z a -mx9 C:\builtfiles\Netch.7z .\Netch\bin\x64\Release\win-x64\
+        7z rn C:\builtfiles\Netch.7z win-x64 Netch
+        echo "::set-env name=Netch_SHA256::$(.\GetSHA256.ps1 C:\builtfiles\Netch.7z)"
+        echo "::set-env name=Netch_EXE_SHA256::$(.\GetSHA256.ps1 Netch\bin\x64\Release\win-x64\Netch.exe)"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Netch
+        path: Netch\bin\x64\Release\win-x64
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        name: ${{ env.GITHUB_TAG_NAME }}
+        prerelease: true
+        draft: false
+        files: |
+          C:\builtfiles\Netch.7z
+        body: |
+          [![](https://img.shields.io/badge/Telegram-Channel-blue)](https://t.me/Netch) [![](https://img.shields.io/badge/Telegram-Group-green)](https://t.me/Netch_Discuss_Group)
+
+          ## 更新日志
+          * 这是 GitHub Actions 自动化部署，更新日志应该很快会手动更新
+
+          ## 校验和
+          | 文件名 | SHA256 |
+          | :- | :- |
+          | Netch.7z | ${{ env.Netch_SHA256 }} |
+
+  # Deploy:
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Download Artifacts
+  #       uses: actions/download-artifact@v1
+  #       with:
+  #         name: Netch
+
+  #     - name: Pushes to another repository
+  #       uses: peaceiris/actions-gh-pages@v3
+  #       with:
+  #         personal_token: ${{ secrets.ACCESS_TOKEN }}
+  #         publish_branch: repo
+  #         publish_dir: ./Netch
+  #         external_repository: ${{ github.repository_owner }}/NetchReleases
+  #         user_name: 'github-actions[bot]'
+  #         user_email: 'github-actions[bot]@users.noreply.github.com'

@@ -1,0 +1,6 @@
+# BF1
+bf1.exe
+bf1Trial.exe
+Cleanup.exe
+Touchup.exe
+ActivationUI.exe

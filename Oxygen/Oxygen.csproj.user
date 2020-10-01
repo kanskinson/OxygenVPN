@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="Forms\GlobalBypassIPForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Mode\Process.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\SettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\SubscribeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ServerEx\ShadowsocksR\Form\ShadowsocksRForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ServerEx\Shadowsocks\Form\ShadowsocksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ServerEx\Socks5\Form\Socks5Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ServerEx\Trojan\Form\TrojanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ServerEx\VMess\Form\VMessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

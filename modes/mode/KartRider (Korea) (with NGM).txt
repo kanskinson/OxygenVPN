@@ -1,0 +1,9 @@
+# KartRider (Korea) (with NGM), 0
+AdBalloonExt.exe
+KartRecovery.exe
+KartRider.exe
+NexonPlug.exe
+NMService.exe
+NGM.exe
+NGM64.exe
+SIG.exe

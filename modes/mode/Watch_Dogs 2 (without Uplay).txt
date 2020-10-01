@@ -1,0 +1,5 @@
+# Watch_Dogs 2 (without Uplay)
+EAC.exe
+WatchDogs2.exe
+SplashScreen.exe
+EasyAntiCheat.exe

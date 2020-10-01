@@ -1,0 +1,13 @@
+# Watch_Dogs 2 (with Uplay)
+UbisoftGameLauncher.exe
+UbisoftGameLauncher64.exe
+upc.exe
+Uplay.exe
+UplayCrashReporter.exe
+UplayService.exe
+UplayWebCore.exe
+EAC.exe
+WatchDogs2.exe
+SplashScreen.exe
+UplayInstaller.exe
+EasyAntiCheat.exe

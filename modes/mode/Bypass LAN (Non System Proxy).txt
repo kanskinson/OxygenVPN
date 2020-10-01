@@ -1,0 +1,1 @@
+# Bypass LAN (Non System Proxy), 5, 0

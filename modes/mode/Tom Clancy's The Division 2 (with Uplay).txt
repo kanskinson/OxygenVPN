@@ -1,0 +1,11 @@
+# Tom Clancy's The Division 2 (with Uplay)
+UbisoftGameLauncher.exe
+UbisoftGameLauncher64.exe
+Uninstall.exe
+upc.exe
+Uplay.exe
+UplayCrashReporter.exe
+UplayService.exe
+UplayWebCore.exe
+TheDivision2.exe
+thedivision2launcher.exe

@@ -1,0 +1,5 @@
+# World of WarShips, 0
+WorldOfWarships64.exe
+cef_browser_process.exe
+cef_subprocess.exe
+WargamingErrorMonitor.exe

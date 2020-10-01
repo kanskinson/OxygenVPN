@@ -1,0 +1,10 @@
+# EVE Online, 0
+eve.exe
+exefile.exe
+LogServer.exe
+DirectXRedist.exe
+evelauncher.exe
+fixpermissions.exe
+LogLite.exe
+QtWebEngineProcess.exe
+updater.exe

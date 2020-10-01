@@ -1,0 +1,15 @@
+# BF4
+bf4.exe
+BF4WebHelper.exe
+BF4X86WebHelper.exe
+bf4_x86.exe
+BFLauncher.exe
+BFLauncher_x86.exe
+pbsvc.exe
+Cleanup.exe
+Touchup.exe
+vcredist_x64.exe
+vcredist_x86.exe
+DXSETUP.exe
+battlelog-web-plugins.exe
+ActivationUI.exe

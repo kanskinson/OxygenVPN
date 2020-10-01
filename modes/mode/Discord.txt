@@ -1,0 +1,4 @@
+# Discord
+Discord.exe
+Squirrel.exe
+Update.exe

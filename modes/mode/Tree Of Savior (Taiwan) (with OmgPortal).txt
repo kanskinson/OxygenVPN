@@ -1,0 +1,6 @@
+# Tree Of Savior (Taiwan) (with OmgPortal), 0
+Client_tos.exe
+tos.exe
+OmgPortal.exe
+OmgPortals.exe
+Patch_OmgPortal.exe

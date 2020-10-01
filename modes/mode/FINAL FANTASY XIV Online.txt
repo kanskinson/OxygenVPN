@@ -1,0 +1,13 @@
+# FINAL FANTASY XIV Online
+ffxivboot.exe
+ffxivboot64.exe
+ffxivconfig.exe
+ffxivconfig64.exe
+ffxivlauncher.exe
+ffxivlauncher64.exe
+ffxivsysinfo.exe
+ffxivsysinfo64.exe
+ffxivupdater.exe
+ffxivupdater64.exe
+ffxiv.exe
+ffxiv_dx11.exe

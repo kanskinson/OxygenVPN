@@ -1,0 +1,3 @@
+# Tom Clancy's The Division 2 (without Uplay)
+TheDivision2.exe
+thedivision2launcher.exe

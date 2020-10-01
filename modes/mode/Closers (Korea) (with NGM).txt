@@ -1,0 +1,10 @@
+# Closers (Korea) (with NGM), 0
+CLOSERS.exe
+CW.exe
+NGM.exe
+NGCLIENT.AES
+NexonPlug.exe
+NMService.exe
+NGM64.exe
+SIG.exe
+LAUNCHER.EXE
