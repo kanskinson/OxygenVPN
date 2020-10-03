@@ -33,6 +33,7 @@
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.ServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ImportServersFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.ModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CreateProcessModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReloadModesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,9 +42,11 @@
             this.UpdateServersFromSubscribeLinksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.CleanDNSCacheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UpdateACLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateACLWithProxyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.UninstallServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reinstallTapDriverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,16 +57,25 @@
             this.ConfigurationGroupBox = new System.Windows.Forms.GroupBox();
             this.configLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelProfileOptions = new System.Windows.Forms.TableLayoutPanel();
+            this.SavePorfilePictureBox = new System.Windows.Forms.PictureBox();
+            this.DeleteProfilePictureBox = new System.Windows.Forms.PictureBox();
             this.ProfilesLabel = new System.Windows.Forms.Label();
-            this.ProfileNameText = new System.Windows.Forms.TextBox();
-            this.comboBoxProfiles = new System.Windows.Forms.ComboBox();
             this.ServerComboBox = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanelServer = new System.Windows.Forms.TableLayoutPanel();
+            this.EditServerPictureBox = new System.Windows.Forms.PictureBox();
+            this.CopyLinkPictureBox = new System.Windows.Forms.PictureBox();
+            this.DeleteServerPictureBox = new System.Windows.Forms.PictureBox();
+            this.SpeedPictureBox = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanelMode = new System.Windows.Forms.TableLayoutPanel();
+            this.EditModePictureBox = new System.Windows.Forms.PictureBox();
+            this.DeleteModePictureBox = new System.Windows.Forms.PictureBox();
             this.ModeComboBox = new System.Windows.Forms.ComboBox();
-            this.ProfileLabel = new System.Windows.Forms.Label();
             this.ModeLabel = new System.Windows.Forms.Label();
             this.ServerLabel = new System.Windows.Forms.Label();
+            this.tableLayoutPanelProfiles = new System.Windows.Forms.TableLayoutPanel();
+            this.comboBoxProfiles = new System.Windows.Forms.ComboBox();
+            this.ProfileNameText = new System.Windows.Forms.TextBox();
+            this.ProfileLabel = new System.Windows.Forms.Label();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.ControlButton = new System.Windows.Forms.Button();
@@ -74,6 +86,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanelOptions = new System.Windows.Forms.FlowLayoutPanel();
+            this.SettingsButton = new System.Windows.Forms.Button();
+            this.LogButton = new System.Windows.Forms.Button();
             this.tableLayoutPanelStatistics = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelNAT = new System.Windows.Forms.TableLayoutPanel();
             this.labelNat = new System.Windows.Forms.Label();
@@ -83,26 +97,21 @@
             this.labelNatTitle = new System.Windows.Forms.Label();
             this.labelUsed = new System.Windows.Forms.Label();
             this.labelSpeed = new System.Windows.Forms.Label();
-            this.SettingsButton = new System.Windows.Forms.Button();
-            this.LogButton = new System.Windows.Forms.Button();
-            this.SavePorfilePictureBox = new System.Windows.Forms.PictureBox();
-            this.DeleteProfilePictureBox = new System.Windows.Forms.PictureBox();
-            this.EditServerPictureBox = new System.Windows.Forms.PictureBox();
-            this.CopyLinkPictureBox = new System.Windows.Forms.PictureBox();
-            this.DeleteServerPictureBox = new System.Windows.Forms.PictureBox();
-            this.SpeedPictureBox = new System.Windows.Forms.PictureBox();
-            this.EditModePictureBox = new System.Windows.Forms.PictureBox();
-            this.DeleteModePictureBox = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanelProfiles = new System.Windows.Forms.TableLayoutPanel();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuStrip.SuspendLayout();
             this.ConfigurationGroupBox.SuspendLayout();
             this.configLayoutPanel.SuspendLayout();
             this.tableLayoutPanelProfileOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SavePorfilePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DeleteProfilePictureBox)).BeginInit();
             this.tableLayoutPanelServer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.EditServerPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CopyLinkPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DeleteServerPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedPictureBox)).BeginInit();
             this.tableLayoutPanelMode.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.EditModePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DeleteModePictureBox)).BeginInit();
+            this.tableLayoutPanelProfiles.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.NotifyMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -110,15 +119,6 @@
             this.flowLayoutPanelOptions.SuspendLayout();
             this.tableLayoutPanelStatistics.SuspendLayout();
             this.tableLayoutPanelNAT.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SavePorfilePictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DeleteProfilePictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EditServerPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CopyLinkPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DeleteServerPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SpeedPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EditModePictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DeleteModePictureBox)).BeginInit();
-            this.tableLayoutPanelProfiles.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuStrip
@@ -155,6 +155,11 @@
             this.ImportServersFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.ImportServersFromClipboardToolStripMenuItem.Text = "Import Servers From Clipboard";
             this.ImportServersFromClipboardToolStripMenuItem.Click += new System.EventHandler(this.ImportServersFromClipboardToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(233, 6);
             // 
             // ModeToolStripMenuItem
             // 
@@ -227,6 +232,11 @@
             this.OpenDirectoryToolStripMenuItem.Text = "Open Directory";
             this.OpenDirectoryToolStripMenuItem.Click += new System.EventHandler(this.OpenDirectoryToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(201, 6);
+            // 
             // CleanDNSCacheToolStripMenuItem
             // 
             this.CleanDNSCacheToolStripMenuItem.Name = "CleanDNSCacheToolStripMenuItem";
@@ -247,6 +257,11 @@
             this.updateACLWithProxyToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.updateACLWithProxyToolStripMenuItem.Text = "Update ACL with proxy";
             this.updateACLWithProxyToolStripMenuItem.Click += new System.EventHandler(this.updateACLWithProxyToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(201, 6);
             // 
             // UninstallServiceToolStripMenuItem
             // 
@@ -368,6 +383,29 @@
             this.tableLayoutPanelProfileOptions.Size = new System.Drawing.Size(94, 22);
             this.tableLayoutPanelProfileOptions.TabIndex = 16;
             // 
+            // SavePorfilePictureBox
+            // 
+            this.SavePorfilePictureBox.BackColor = System.Drawing.SystemColors.Control;
+            this.SavePorfilePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SavePorfilePictureBox.Image = global::OxygenVPN.Properties.Resources.edit;
+            this.SavePorfilePictureBox.Location = new System.Drawing.Point(3, 3);
+            this.SavePorfilePictureBox.Name = "SavePorfilePictureBox";
+            this.SavePorfilePictureBox.Size = new System.Drawing.Size(16, 16);
+            this.SavePorfilePictureBox.TabIndex = 7;
+            this.SavePorfilePictureBox.TabStop = false;
+            this.SavePorfilePictureBox.Click += new System.EventHandler(this.SavePorfilePictureBox_Click);
+            // 
+            // DeleteProfilePictureBox
+            // 
+            this.DeleteProfilePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DeleteProfilePictureBox.Image = global::OxygenVPN.Properties.Resources.delete;
+            this.DeleteProfilePictureBox.Location = new System.Drawing.Point(26, 3);
+            this.DeleteProfilePictureBox.Name = "DeleteProfilePictureBox";
+            this.DeleteProfilePictureBox.Size = new System.Drawing.Size(16, 16);
+            this.DeleteProfilePictureBox.TabIndex = 8;
+            this.DeleteProfilePictureBox.TabStop = false;
+            this.DeleteProfilePictureBox.Click += new System.EventHandler(this.DeleteProfilePictureBox_Click);
+            // 
             // ProfilesLabel
             // 
             this.ProfilesLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -377,24 +415,6 @@
             this.ProfilesLabel.Size = new System.Drawing.Size(46, 15);
             this.ProfilesLabel.TabIndex = 17;
             this.ProfilesLabel.Text = "Profiles";
-            // 
-            // ProfileNameText
-            // 
-            this.ProfileNameText.Location = new System.Drawing.Point(199, 3);
-            this.ProfileNameText.Name = "ProfileNameText";
-            this.ProfileNameText.Size = new System.Drawing.Size(143, 23);
-            this.ProfileNameText.TabIndex = 3;
-            // 
-            // comboBoxProfiles
-            // 
-            this.comboBoxProfiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBoxProfiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProfiles.FormattingEnabled = true;
-            this.comboBoxProfiles.Location = new System.Drawing.Point(3, 3);
-            this.comboBoxProfiles.Name = "comboBoxProfiles";
-            this.comboBoxProfiles.Size = new System.Drawing.Size(143, 23);
-            this.comboBoxProfiles.TabIndex = 16;
-            this.comboBoxProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxProfiles_SelectedIndexChanged);
             // 
             // ServerComboBox
             // 
@@ -431,6 +451,51 @@
             this.tableLayoutPanelServer.Size = new System.Drawing.Size(94, 22);
             this.tableLayoutPanelServer.TabIndex = 12;
             // 
+            // EditServerPictureBox
+            // 
+            this.EditServerPictureBox.BackColor = System.Drawing.SystemColors.Control;
+            this.EditServerPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EditServerPictureBox.Image = global::OxygenVPN.Properties.Resources.edit;
+            this.EditServerPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.EditServerPictureBox.Name = "EditServerPictureBox";
+            this.EditServerPictureBox.Size = new System.Drawing.Size(16, 16);
+            this.EditServerPictureBox.TabIndex = 7;
+            this.EditServerPictureBox.TabStop = false;
+            this.EditServerPictureBox.Click += new System.EventHandler(this.EditServerPictureBox_Click);
+            // 
+            // CopyLinkPictureBox
+            // 
+            this.CopyLinkPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CopyLinkPictureBox.Image = global::OxygenVPN.Properties.Resources.CopyLink;
+            this.CopyLinkPictureBox.Location = new System.Drawing.Point(72, 3);
+            this.CopyLinkPictureBox.Name = "CopyLinkPictureBox";
+            this.CopyLinkPictureBox.Size = new System.Drawing.Size(18, 16);
+            this.CopyLinkPictureBox.TabIndex = 14;
+            this.CopyLinkPictureBox.TabStop = false;
+            this.CopyLinkPictureBox.Click += new System.EventHandler(this.CopyLinkPictureBox_Click);
+            // 
+            // DeleteServerPictureBox
+            // 
+            this.DeleteServerPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DeleteServerPictureBox.Image = global::OxygenVPN.Properties.Resources.delete;
+            this.DeleteServerPictureBox.Location = new System.Drawing.Point(26, 3);
+            this.DeleteServerPictureBox.Name = "DeleteServerPictureBox";
+            this.DeleteServerPictureBox.Size = new System.Drawing.Size(16, 16);
+            this.DeleteServerPictureBox.TabIndex = 8;
+            this.DeleteServerPictureBox.TabStop = false;
+            this.DeleteServerPictureBox.Click += new System.EventHandler(this.DeleteServerPictureBox_Click);
+            // 
+            // SpeedPictureBox
+            // 
+            this.SpeedPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SpeedPictureBox.Image = global::OxygenVPN.Properties.Resources.speed;
+            this.SpeedPictureBox.Location = new System.Drawing.Point(49, 3);
+            this.SpeedPictureBox.Name = "SpeedPictureBox";
+            this.SpeedPictureBox.Size = new System.Drawing.Size(16, 16);
+            this.SpeedPictureBox.TabIndex = 9;
+            this.SpeedPictureBox.TabStop = false;
+            this.SpeedPictureBox.Click += new System.EventHandler(this.SpeedPictureBox_Click);
+            // 
             // tableLayoutPanelMode
             // 
             this.tableLayoutPanelMode.ColumnCount = 4;
@@ -447,6 +512,28 @@
             this.tableLayoutPanelMode.Size = new System.Drawing.Size(94, 22);
             this.tableLayoutPanelMode.TabIndex = 13;
             // 
+            // EditModePictureBox
+            // 
+            this.EditModePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EditModePictureBox.Image = global::OxygenVPN.Properties.Resources.edit;
+            this.EditModePictureBox.Location = new System.Drawing.Point(3, 3);
+            this.EditModePictureBox.Name = "EditModePictureBox";
+            this.EditModePictureBox.Size = new System.Drawing.Size(16, 16);
+            this.EditModePictureBox.TabIndex = 12;
+            this.EditModePictureBox.TabStop = false;
+            this.EditModePictureBox.Click += new System.EventHandler(this.EditModePictureBox_Click);
+            // 
+            // DeleteModePictureBox
+            // 
+            this.DeleteModePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DeleteModePictureBox.Image = global::OxygenVPN.Properties.Resources.delete;
+            this.DeleteModePictureBox.Location = new System.Drawing.Point(26, 3);
+            this.DeleteModePictureBox.Name = "DeleteModePictureBox";
+            this.DeleteModePictureBox.Size = new System.Drawing.Size(16, 16);
+            this.DeleteModePictureBox.TabIndex = 13;
+            this.DeleteModePictureBox.TabStop = false;
+            this.DeleteModePictureBox.Click += new System.EventHandler(this.DeleteModePictureBox_Click);
+            // 
             // ModeComboBox
             // 
             this.ModeComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -455,16 +542,6 @@
             this.ModeComboBox.Name = "ModeComboBox";
             this.ModeComboBox.Size = new System.Drawing.Size(339, 23);
             this.ModeComboBox.TabIndex = 2;
-            // 
-            // ProfileLabel
-            // 
-            this.ProfileLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.ProfileLabel.AutoSize = true;
-            this.ProfileLabel.Location = new System.Drawing.Point(152, 6);
-            this.ProfileLabel.Name = "ProfileLabel";
-            this.ProfileLabel.Size = new System.Drawing.Size(41, 15);
-            this.ProfileLabel.TabIndex = 10;
-            this.ProfileLabel.Text = "Profile";
             // 
             // ModeLabel
             // 
@@ -485,6 +562,52 @@
             this.ServerLabel.Size = new System.Drawing.Size(39, 15);
             this.ServerLabel.TabIndex = 0;
             this.ServerLabel.Text = "Server";
+            // 
+            // tableLayoutPanelProfiles
+            // 
+            this.tableLayoutPanelProfiles.ColumnCount = 3;
+            this.tableLayoutPanelProfiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelProfiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanelProfiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelProfiles.Controls.Add(this.comboBoxProfiles, 0, 0);
+            this.tableLayoutPanelProfiles.Controls.Add(this.ProfileNameText, 2, 0);
+            this.tableLayoutPanelProfiles.Controls.Add(this.ProfileLabel, 1, 0);
+            this.tableLayoutPanelProfiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelProfiles.Location = new System.Drawing.Point(52, 0);
+            this.tableLayoutPanelProfiles.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanelProfiles.Name = "tableLayoutPanelProfiles";
+            this.tableLayoutPanelProfiles.RowCount = 1;
+            this.tableLayoutPanelProfiles.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelProfiles.Size = new System.Drawing.Size(345, 28);
+            this.tableLayoutPanelProfiles.TabIndex = 18;
+            // 
+            // comboBoxProfiles
+            // 
+            this.comboBoxProfiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxProfiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProfiles.FormattingEnabled = true;
+            this.comboBoxProfiles.Location = new System.Drawing.Point(3, 3);
+            this.comboBoxProfiles.Name = "comboBoxProfiles";
+            this.comboBoxProfiles.Size = new System.Drawing.Size(143, 23);
+            this.comboBoxProfiles.TabIndex = 16;
+            this.comboBoxProfiles.SelectedIndexChanged += new System.EventHandler(this.comboBoxProfiles_SelectedIndexChanged);
+            // 
+            // ProfileNameText
+            // 
+            this.ProfileNameText.Location = new System.Drawing.Point(199, 3);
+            this.ProfileNameText.Name = "ProfileNameText";
+            this.ProfileNameText.Size = new System.Drawing.Size(143, 23);
+            this.ProfileNameText.TabIndex = 3;
+            // 
+            // ProfileLabel
+            // 
+            this.ProfileLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.ProfileLabel.AutoSize = true;
+            this.ProfileLabel.Location = new System.Drawing.Point(152, 6);
+            this.ProfileLabel.Name = "ProfileLabel";
+            this.ProfileLabel.Size = new System.Drawing.Size(41, 15);
+            this.ProfileLabel.TabIndex = 10;
+            this.ProfileLabel.Text = "Profile";
             // 
             // StatusStrip
             // 
@@ -589,6 +712,28 @@
             this.flowLayoutPanelOptions.Name = "flowLayoutPanelOptions";
             this.flowLayoutPanelOptions.Size = new System.Drawing.Size(94, 24);
             this.flowLayoutPanelOptions.TabIndex = 16;
+            // 
+            // SettingsButton
+            // 
+            this.SettingsButton.Image = global::OxygenVPN.Properties.Resources.settings;
+            this.SettingsButton.Location = new System.Drawing.Point(0, 0);
+            this.SettingsButton.Margin = new System.Windows.Forms.Padding(0);
+            this.SettingsButton.Name = "SettingsButton";
+            this.SettingsButton.Size = new System.Drawing.Size(24, 24);
+            this.SettingsButton.TabIndex = 4;
+            this.SettingsButton.UseVisualStyleBackColor = true;
+            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
+            // 
+            // LogButton
+            // 
+            this.LogButton.Image = global::OxygenVPN.Properties.Resources.log;
+            this.LogButton.Location = new System.Drawing.Point(24, 0);
+            this.LogButton.Margin = new System.Windows.Forms.Padding(0);
+            this.LogButton.Name = "LogButton";
+            this.LogButton.Size = new System.Drawing.Size(24, 24);
+            this.LogButton.TabIndex = 5;
+            this.LogButton.UseVisualStyleBackColor = true;
+            this.LogButton.Click += new System.EventHandler(this.LogButton_Click);
             // 
             // tableLayoutPanelStatistics
             // 
@@ -708,151 +853,6 @@
             this.labelSpeed.TabIndex = 4;
             this.labelSpeed.Text = "1.25MB/s";
             // 
-            // SettingsButton
-            // 
-            this.SettingsButton.Image = global::OxygenVPN.Properties.Resources.settings;
-            this.SettingsButton.Location = new System.Drawing.Point(0, 0);
-            this.SettingsButton.Margin = new System.Windows.Forms.Padding(0);
-            this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(24, 24);
-            this.SettingsButton.TabIndex = 4;
-            this.SettingsButton.UseVisualStyleBackColor = true;
-            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
-            // 
-            // LogButton
-            // 
-            this.LogButton.Image = global::OxygenVPN.Properties.Resources.log;
-            this.LogButton.Location = new System.Drawing.Point(24, 0);
-            this.LogButton.Margin = new System.Windows.Forms.Padding(0);
-            this.LogButton.Name = "LogButton";
-            this.LogButton.Size = new System.Drawing.Size(24, 24);
-            this.LogButton.TabIndex = 5;
-            this.LogButton.UseVisualStyleBackColor = true;
-            this.LogButton.Click += new System.EventHandler(this.LogButton_Click);
-            // 
-            // SavePorfilePictureBox
-            // 
-            this.SavePorfilePictureBox.BackColor = System.Drawing.SystemColors.Control;
-            this.SavePorfilePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SavePorfilePictureBox.Image = global::OxygenVPN.Properties.Resources.edit;
-            this.SavePorfilePictureBox.Location = new System.Drawing.Point(3, 3);
-            this.SavePorfilePictureBox.Name = "SavePorfilePictureBox";
-            this.SavePorfilePictureBox.Size = new System.Drawing.Size(16, 16);
-            this.SavePorfilePictureBox.TabIndex = 7;
-            this.SavePorfilePictureBox.TabStop = false;
-            this.SavePorfilePictureBox.Click += new System.EventHandler(this.SavePorfilePictureBox_Click);
-            // 
-            // DeleteProfilePictureBox
-            // 
-            this.DeleteProfilePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DeleteProfilePictureBox.Image = global::OxygenVPN.Properties.Resources.delete;
-            this.DeleteProfilePictureBox.Location = new System.Drawing.Point(26, 3);
-            this.DeleteProfilePictureBox.Name = "DeleteProfilePictureBox";
-            this.DeleteProfilePictureBox.Size = new System.Drawing.Size(16, 16);
-            this.DeleteProfilePictureBox.TabIndex = 8;
-            this.DeleteProfilePictureBox.TabStop = false;
-            this.DeleteProfilePictureBox.Click += new System.EventHandler(this.DeleteProfilePictureBox_Click);
-            // 
-            // EditServerPictureBox
-            // 
-            this.EditServerPictureBox.BackColor = System.Drawing.SystemColors.Control;
-            this.EditServerPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.EditServerPictureBox.Image = global::OxygenVPN.Properties.Resources.edit;
-            this.EditServerPictureBox.Location = new System.Drawing.Point(3, 3);
-            this.EditServerPictureBox.Name = "EditServerPictureBox";
-            this.EditServerPictureBox.Size = new System.Drawing.Size(16, 16);
-            this.EditServerPictureBox.TabIndex = 7;
-            this.EditServerPictureBox.TabStop = false;
-            this.EditServerPictureBox.Click += new System.EventHandler(this.EditServerPictureBox_Click);
-            // 
-            // CopyLinkPictureBox
-            // 
-            this.CopyLinkPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CopyLinkPictureBox.Image = global::OxygenVPN.Properties.Resources.CopyLink;
-            this.CopyLinkPictureBox.Location = new System.Drawing.Point(72, 3);
-            this.CopyLinkPictureBox.Name = "CopyLinkPictureBox";
-            this.CopyLinkPictureBox.Size = new System.Drawing.Size(18, 16);
-            this.CopyLinkPictureBox.TabIndex = 14;
-            this.CopyLinkPictureBox.TabStop = false;
-            this.CopyLinkPictureBox.Click += new System.EventHandler(this.CopyLinkPictureBox_Click);
-            // 
-            // DeleteServerPictureBox
-            // 
-            this.DeleteServerPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DeleteServerPictureBox.Image = global::OxygenVPN.Properties.Resources.delete;
-            this.DeleteServerPictureBox.Location = new System.Drawing.Point(26, 3);
-            this.DeleteServerPictureBox.Name = "DeleteServerPictureBox";
-            this.DeleteServerPictureBox.Size = new System.Drawing.Size(16, 16);
-            this.DeleteServerPictureBox.TabIndex = 8;
-            this.DeleteServerPictureBox.TabStop = false;
-            this.DeleteServerPictureBox.Click += new System.EventHandler(this.DeleteServerPictureBox_Click);
-            // 
-            // SpeedPictureBox
-            // 
-            this.SpeedPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SpeedPictureBox.Image = global::OxygenVPN.Properties.Resources.speed;
-            this.SpeedPictureBox.Location = new System.Drawing.Point(49, 3);
-            this.SpeedPictureBox.Name = "SpeedPictureBox";
-            this.SpeedPictureBox.Size = new System.Drawing.Size(16, 16);
-            this.SpeedPictureBox.TabIndex = 9;
-            this.SpeedPictureBox.TabStop = false;
-            this.SpeedPictureBox.Click += new System.EventHandler(this.SpeedPictureBox_Click);
-            // 
-            // EditModePictureBox
-            // 
-            this.EditModePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.EditModePictureBox.Image = global::OxygenVPN.Properties.Resources.edit;
-            this.EditModePictureBox.Location = new System.Drawing.Point(3, 3);
-            this.EditModePictureBox.Name = "EditModePictureBox";
-            this.EditModePictureBox.Size = new System.Drawing.Size(16, 16);
-            this.EditModePictureBox.TabIndex = 12;
-            this.EditModePictureBox.TabStop = false;
-            this.EditModePictureBox.Click += new System.EventHandler(this.EditModePictureBox_Click);
-            // 
-            // DeleteModePictureBox
-            // 
-            this.DeleteModePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DeleteModePictureBox.Image = global::OxygenVPN.Properties.Resources.delete;
-            this.DeleteModePictureBox.Location = new System.Drawing.Point(26, 3);
-            this.DeleteModePictureBox.Name = "DeleteModePictureBox";
-            this.DeleteModePictureBox.Size = new System.Drawing.Size(16, 16);
-            this.DeleteModePictureBox.TabIndex = 13;
-            this.DeleteModePictureBox.TabStop = false;
-            this.DeleteModePictureBox.Click += new System.EventHandler(this.DeleteModePictureBox_Click);
-            // 
-            // tableLayoutPanelProfiles
-            // 
-            this.tableLayoutPanelProfiles.ColumnCount = 3;
-            this.tableLayoutPanelProfiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelProfiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelProfiles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelProfiles.Controls.Add(this.comboBoxProfiles, 0, 0);
-            this.tableLayoutPanelProfiles.Controls.Add(this.ProfileNameText, 2, 0);
-            this.tableLayoutPanelProfiles.Controls.Add(this.ProfileLabel, 1, 0);
-            this.tableLayoutPanelProfiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelProfiles.Location = new System.Drawing.Point(52, 0);
-            this.tableLayoutPanelProfiles.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanelProfiles.Name = "tableLayoutPanelProfiles";
-            this.tableLayoutPanelProfiles.RowCount = 1;
-            this.tableLayoutPanelProfiles.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelProfiles.Size = new System.Drawing.Size(345, 28);
-            this.tableLayoutPanelProfiles.TabIndex = 18;
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(233, 6);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(201, 6);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(201, 6);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -881,8 +881,18 @@
             this.configLayoutPanel.ResumeLayout(false);
             this.configLayoutPanel.PerformLayout();
             this.tableLayoutPanelProfileOptions.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SavePorfilePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DeleteProfilePictureBox)).EndInit();
             this.tableLayoutPanelServer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.EditServerPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CopyLinkPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DeleteServerPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedPictureBox)).EndInit();
             this.tableLayoutPanelMode.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.EditModePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DeleteModePictureBox)).EndInit();
+            this.tableLayoutPanelProfiles.ResumeLayout(false);
+            this.tableLayoutPanelProfiles.PerformLayout();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
             this.NotifyMenu.ResumeLayout(false);
@@ -893,16 +903,6 @@
             this.tableLayoutPanelStatistics.PerformLayout();
             this.tableLayoutPanelNAT.ResumeLayout(false);
             this.tableLayoutPanelNAT.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SavePorfilePictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DeleteProfilePictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EditServerPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CopyLinkPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DeleteServerPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SpeedPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EditModePictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DeleteModePictureBox)).EndInit();
-            this.tableLayoutPanelProfiles.ResumeLayout(false);
-            this.tableLayoutPanelProfiles.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

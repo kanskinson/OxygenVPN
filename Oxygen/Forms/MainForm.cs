@@ -440,7 +440,7 @@ namespace OxygenVPN.Forms {
             int index = comboBoxProfiles.SelectedIndex;
             if (index != -1) {
                 SaveProfile(index);
-                comboBoxProfiles.Items[index] = ProfileNameText.Text;
+                comboBoxProfiles.Items[index] = $"[{index + 1}] {ProfileNameText.Text}";
             }
         }
 
