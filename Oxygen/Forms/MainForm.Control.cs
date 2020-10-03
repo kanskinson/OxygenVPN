@@ -6,30 +6,23 @@ using OxygenVPN.Controllers;
 using OxygenVPN.Models;
 using OxygenVPN.Utils;
 
-namespace OxygenVPN.Forms
-{
-    public partial class Dummy
-    {
+namespace OxygenVPN.Forms {
+    public partial class Dummy {
     }
 
-    partial class MainForm
-    {
+    partial class MainForm {
         private bool _isFirstCloseWindow = true;
 
-        private async void ControlFun()
-        {
+        private async void ControlFun() {
             Configuration.Save();
-            if (State == State.Waiting || State == State.Stopped)
-            {
+            if (State == State.Waiting || State == State.Stopped) {
                 // 服务器、模式 需选择
-                if (!(ServerComboBox.SelectedItem is Server server))
-                {
+                if (!(ServerComboBox.SelectedItem is Server server)) {
                     MessageBoxX.Show(i18N.Translate("Please select a server first"));
                     return;
                 }
 
-                if (!(ModeComboBox.SelectedItem is Models.Mode mode))
-                {
+                if (!(ModeComboBox.SelectedItem is Models.Mode mode)) {
                     MessageBoxX.Show(i18N.Translate("Please select a mode first"));
                     return;
                 }
@@ -39,17 +32,14 @@ namespace OxygenVPN.Forms
 
                 State = State.Starting;
 
-                if (await MainController.Start(server, mode))
-                {
+                if (await MainController.Start(server, mode)) {
                     State = State.Started;
                     _ = Task.Run(() => { Bandwidth.NetTraffic(server, mode); });
                     // 如果勾选启动后最小化
-                    if (Global.Settings.MinimizeWhenStarted)
-                    {
+                    if (Global.Settings.MinimizeWhenStarted) {
                         WindowState = FormWindowState.Minimized;
 
-                        if (_isFirstCloseWindow)
-                        {
+                        if (_isFirstCloseWindow) {
                             // 显示提示语
                             NotifyTip(i18N.Translate("Oxygen VPN is now minimized to the notification bar, double click this icon to restore."));
                             _isFirstCloseWindow = false;
@@ -58,13 +48,10 @@ namespace OxygenVPN.Forms
                         Hide();
                     }
 
-                    if (Global.Settings.StartedTcping)
-                    {
+                    if (Global.Settings.StartedTcping) {
                         // 自动检测延迟
-                        _ = Task.Run(() =>
-                        {
-                            while (State == State.Started)
-                            {
+                        _ = Task.Run(() => {
+                            while (State == State.Started) {
                                 server.Test();
                                 // 重绘 ServerComboBox
                                 ServerComboBox.Invalidate();
@@ -73,15 +60,11 @@ namespace OxygenVPN.Forms
                             }
                         });
                     }
-                }
-                else
-                {
+                } else {
                     State = State.Stopped;
                     StatusText(i18N.Translate("Start failed"));
                 }
-            }
-            else
-            {
+            } else {
                 // 停止
                 State = State.Stopping;
                 await MainController.Stop();
@@ -90,26 +73,24 @@ namespace OxygenVPN.Forms
             }
         }
 
-        public void OnBandwidthUpdated(ulong download)
-        {
-            if (InvokeRequired)
-            {
+        public void OnBandwidthUpdated(ulong download) {
+            if (InvokeRequired) {
                 BeginInvoke(new Action<ulong>(OnBandwidthUpdated), download);
                 return;
             }
 
-            try
-            {
-                labelUsed.Text = $"{Bandwidth.Compute(download)}";
-                labelSpeed.Text = $"{Bandwidth.Compute(download - LastDownloadBandwidth)}/s";                
+            if (State == State.Started) {
 
-                //LastUploadBandwidth = upload;
-                LastDownloadBandwidth = download;
-                Refresh();
-            }
-            catch
-            {
-                // ignored
+                try {
+                    labelUsed.Text = $"{Bandwidth.Compute(download)}";
+                    labelSpeed.Text = $"{Bandwidth.Compute(download - LastDownloadBandwidth)}/s";
+
+                    //LastUploadBandwidth = upload;
+                    LastDownloadBandwidth = download;
+                    Refresh();
+                } catch {
+                    // ignored
+                }
             }
         }
 

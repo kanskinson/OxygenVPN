@@ -761,27 +761,28 @@
             // tableLayoutPanelNAT
             // 
             this.tableLayoutPanelNAT.ColumnCount = 2;
-            this.tableLayoutPanelNAT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanelNAT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
             this.tableLayoutPanelNAT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelNAT.Controls.Add(this.labelNat, 1, 0);
             this.tableLayoutPanelNAT.Controls.Add(this.labelNatLight, 0, 0);
             this.tableLayoutPanelNAT.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelNAT.Location = new System.Drawing.Point(359, 25);
+            this.tableLayoutPanelNAT.Location = new System.Drawing.Point(356, 22);
+            this.tableLayoutPanelNAT.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelNAT.Name = "tableLayoutPanelNAT";
             this.tableLayoutPanelNAT.RowCount = 1;
             this.tableLayoutPanelNAT.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelNAT.Size = new System.Drawing.Size(172, 26);
+            this.tableLayoutPanelNAT.Size = new System.Drawing.Size(178, 32);
             this.tableLayoutPanelNAT.TabIndex = 16;
             // 
             // labelNat
             // 
             this.labelNat.AutoSize = true;
             this.labelNat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelNat.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelNat.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelNat.ForeColor = System.Drawing.Color.White;
-            this.labelNat.Location = new System.Drawing.Point(29, 0);
+            this.labelNat.Location = new System.Drawing.Point(27, 0);
             this.labelNat.Name = "labelNat";
-            this.labelNat.Size = new System.Drawing.Size(140, 26);
+            this.labelNat.Size = new System.Drawing.Size(148, 32);
             this.labelNat.TabIndex = 5;
             this.labelNat.Text = "NAT";
             // 
@@ -789,10 +790,10 @@
             // 
             this.labelNatLight.AutoSize = true;
             this.labelNatLight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelNatLight.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelNatLight.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelNatLight.Location = new System.Drawing.Point(3, 0);
             this.labelNatLight.Name = "labelNatLight";
-            this.labelNatLight.Size = new System.Drawing.Size(20, 26);
+            this.labelNatLight.Size = new System.Drawing.Size(18, 32);
             this.labelNatLight.TabIndex = 6;
             this.labelNatLight.Text = "⬤";
             // 
