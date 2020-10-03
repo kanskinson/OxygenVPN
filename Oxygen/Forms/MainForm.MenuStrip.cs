@@ -112,7 +112,7 @@ namespace OxygenVPN.Forms
         {
             void DisableItems(bool v)
             {
-                MenuStrip.Enabled = ConfigurationGroupBox.Enabled = ProfileGroupBox.Enabled = ControlButton.Enabled = v;
+                MenuStrip.Enabled = ConfigurationGroupBox.Enabled = ControlButton.Enabled = v;
             }
 
             if (Global.Settings.UseProxyToUpdateSubscription && ServerComboBox.SelectedIndex == -1)

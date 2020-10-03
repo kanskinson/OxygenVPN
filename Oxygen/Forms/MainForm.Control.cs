@@ -100,9 +100,8 @@ namespace OxygenVPN.Forms
 
             try
             {
-                UsedBandwidthLabel.Text = $"{i18N.Translate("Used", ": ")}{Bandwidth.Compute(download)}";
-                //UploadSpeedLabel.Text = $"↑: {Utils.Bandwidth.Compute(upload - LastUploadBandwidth)}/s";
-                DownloadSpeedLabel.Text = $"↑↓: {Bandwidth.Compute(download - LastDownloadBandwidth)}/s";
+                labelUsed.Text = $"{Bandwidth.Compute(download)}";
+                labelSpeed.Text = $"{Bandwidth.Compute(download - LastDownloadBandwidth)}/s";                
 
                 //LastUploadBandwidth = upload;
                 LastDownloadBandwidth = download;

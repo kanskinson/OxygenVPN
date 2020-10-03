@@ -15,7 +15,7 @@ namespace OxygenVPN.Controllers
         public const string Name = @"OxygenVPN";
         public const string Copyright = @"Copyright © 2020";
 
-        public const string AssemblyVersion = @"1.0.1";
+        public const string AssemblyVersion = @"1.2.6.1";   //The lastest num is always '1', and the tag of github release is always '0'
         private const string Suffix = @"Release";
 
         public static readonly string Version = $"{AssemblyVersion}{(string.IsNullOrEmpty(Suffix) ? "" : $"-{Suffix}")}";
@@ -42,12 +42,12 @@ namespace OxygenVPN.Controllers
                 LatestVersionNumber = latestRelease.tag_name;
                 LatestVersionUrl = latestRelease.html_url;
                 LatestVersionDownloadUrl = latestRelease.assets[0].browser_download_url;
-                Logging.Info($"Github Lastest Release: {latestRelease.tag_name}");
-                int compareVer = VersionUtil.CompareVersion(latestRelease.tag_name, Version);
+                Logging.Info($"Github lastest release: {latestRelease.tag_name}");
+                int compareVer = VersionUtil.CompareVersion(latestRelease.tag_name, AssemblyVersion);
+                Logging.Info($"New version newer:{compareVer}");
                 if (compareVer > 0)
                 {
-                    Logging.Info("New Version Found");
-                    Logging.Info("Ver Compare:"+compareVer);
+                    Logging.Info("New version found");
                     NewVersionFound?.Invoke(this, new EventArgs());
                 }
                 else

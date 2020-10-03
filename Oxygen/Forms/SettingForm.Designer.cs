@@ -90,7 +90,7 @@
             this.PortGroupBox.Controls.Add(this.Socks5PortTextBox);
             this.PortGroupBox.Location = new System.Drawing.Point(12, 12);
             this.PortGroupBox.Name = "PortGroupBox";
-            this.PortGroupBox.Size = new System.Drawing.Size(420, 140);
+            this.PortGroupBox.Size = new System.Drawing.Size(341, 140);
             this.PortGroupBox.TabIndex = 0;
             this.PortGroupBox.TabStop = false;
             this.PortGroupBox.Text = "Local Port";
@@ -108,7 +108,7 @@
             // 
             this.RedirectorTextBox.Location = new System.Drawing.Point(120, 80);
             this.RedirectorTextBox.Name = "RedirectorTextBox";
-            this.RedirectorTextBox.Size = new System.Drawing.Size(294, 23);
+            this.RedirectorTextBox.Size = new System.Drawing.Size(212, 23);
             this.RedirectorTextBox.TabIndex = 7;
             this.RedirectorTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -136,7 +136,7 @@
             // 
             this.HTTPPortTextBox.Location = new System.Drawing.Point(120, 51);
             this.HTTPPortTextBox.Name = "HTTPPortTextBox";
-            this.HTTPPortTextBox.Size = new System.Drawing.Size(294, 23);
+            this.HTTPPortTextBox.Size = new System.Drawing.Size(212, 23);
             this.HTTPPortTextBox.TabIndex = 4;
             this.HTTPPortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -153,7 +153,7 @@
             // 
             this.Socks5PortTextBox.Location = new System.Drawing.Point(120, 22);
             this.Socks5PortTextBox.Name = "Socks5PortTextBox";
-            this.Socks5PortTextBox.Size = new System.Drawing.Size(294, 23);
+            this.Socks5PortTextBox.Size = new System.Drawing.Size(212, 23);
             this.Socks5PortTextBox.TabIndex = 1;
             this.Socks5PortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -173,7 +173,7 @@
             this.TUNTAPGroupBox.Controls.Add(this.TUNTAPAddressTextBox);
             this.TUNTAPGroupBox.Location = new System.Drawing.Point(12, 158);
             this.TUNTAPGroupBox.Name = "TUNTAPGroupBox";
-            this.TUNTAPGroupBox.Size = new System.Drawing.Size(420, 187);
+            this.TUNTAPGroupBox.Size = new System.Drawing.Size(341, 187);
             this.TUNTAPGroupBox.TabIndex = 3;
             this.TUNTAPGroupBox.TabStop = false;
             this.TUNTAPGroupBox.Text = "TUN/TAP";
@@ -192,7 +192,7 @@
             // ProxyDNSCheckBox
             // 
             this.ProxyDNSCheckBox.AutoSize = true;
-            this.ProxyDNSCheckBox.Location = new System.Drawing.Point(261, 139);
+            this.ProxyDNSCheckBox.Location = new System.Drawing.Point(183, 139);
             this.ProxyDNSCheckBox.Name = "ProxyDNSCheckBox";
             this.ProxyDNSCheckBox.Size = new System.Drawing.Size(137, 19);
             this.ProxyDNSCheckBox.TabIndex = 10;
@@ -202,7 +202,7 @@
             // ICSCheckBox
             // 
             this.ICSCheckBox.AutoSize = true;
-            this.ICSCheckBox.Location = new System.Drawing.Point(261, 160);
+            this.ICSCheckBox.Location = new System.Drawing.Point(183, 160);
             this.ICSCheckBox.Name = "ICSCheckBox";
             this.ICSCheckBox.Size = new System.Drawing.Size(43, 19);
             this.ICSCheckBox.TabIndex = 5;
@@ -235,7 +235,7 @@
             // 
             this.TUNTAPDNSTextBox.Location = new System.Drawing.Point(120, 110);
             this.TUNTAPDNSTextBox.Name = "TUNTAPDNSTextBox";
-            this.TUNTAPDNSTextBox.Size = new System.Drawing.Size(294, 23);
+            this.TUNTAPDNSTextBox.Size = new System.Drawing.Size(212, 23);
             this.TUNTAPDNSTextBox.TabIndex = 8;
             this.TUNTAPDNSTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -252,7 +252,7 @@
             // 
             this.TUNTAPGatewayTextBox.Location = new System.Drawing.Point(120, 80);
             this.TUNTAPGatewayTextBox.Name = "TUNTAPGatewayTextBox";
-            this.TUNTAPGatewayTextBox.Size = new System.Drawing.Size(294, 23);
+            this.TUNTAPGatewayTextBox.Size = new System.Drawing.Size(212, 23);
             this.TUNTAPGatewayTextBox.TabIndex = 6;
             this.TUNTAPGatewayTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -269,7 +269,7 @@
             // 
             this.TUNTAPNetmaskTextBox.Location = new System.Drawing.Point(120, 51);
             this.TUNTAPNetmaskTextBox.Name = "TUNTAPNetmaskTextBox";
-            this.TUNTAPNetmaskTextBox.Size = new System.Drawing.Size(294, 23);
+            this.TUNTAPNetmaskTextBox.Size = new System.Drawing.Size(212, 23);
             this.TUNTAPNetmaskTextBox.TabIndex = 4;
             this.TUNTAPNetmaskTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -286,14 +286,14 @@
             // 
             this.TUNTAPAddressTextBox.Location = new System.Drawing.Point(120, 22);
             this.TUNTAPAddressTextBox.Name = "TUNTAPAddressTextBox";
-            this.TUNTAPAddressTextBox.Size = new System.Drawing.Size(294, 23);
+            this.TUNTAPAddressTextBox.Size = new System.Drawing.Size(212, 23);
             this.TUNTAPAddressTextBox.TabIndex = 2;
             this.TUNTAPAddressTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ControlButton
             // 
             this.ControlButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ControlButton.Location = new System.Drawing.Point(804, 356);
+            this.ControlButton.Location = new System.Drawing.Point(582, 356);
             this.ControlButton.Name = "ControlButton";
             this.ControlButton.Size = new System.Drawing.Size(75, 23);
             this.ControlButton.TabIndex = 11;
@@ -335,9 +335,9 @@
             this.BehaviorGroupBox.Controls.Add(this.StartWhenOpenedCheckBox);
             this.BehaviorGroupBox.Controls.Add(this.StopWhenExitedCheckBox);
             this.BehaviorGroupBox.Controls.Add(this.ExitWhenClosedCheckBox);
-            this.BehaviorGroupBox.Location = new System.Drawing.Point(438, 12);
+            this.BehaviorGroupBox.Location = new System.Drawing.Point(359, 12);
             this.BehaviorGroupBox.Name = "BehaviorGroupBox";
-            this.BehaviorGroupBox.Size = new System.Drawing.Size(441, 333);
+            this.BehaviorGroupBox.Size = new System.Drawing.Size(412, 333);
             this.BehaviorGroupBox.TabIndex = 8;
             this.BehaviorGroupBox.TabStop = false;
             this.BehaviorGroupBox.Text = "Behavior";
@@ -395,7 +395,7 @@
             // 
             this.AclAddrTextBox.Location = new System.Drawing.Point(120, 273);
             this.AclAddrTextBox.Name = "AclAddrTextBox";
-            this.AclAddrTextBox.Size = new System.Drawing.Size(315, 23);
+            this.AclAddrTextBox.Size = new System.Drawing.Size(276, 23);
             this.AclAddrTextBox.TabIndex = 19;
             this.AclAddrTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -411,7 +411,7 @@
             // DetectionIntervalLabel
             // 
             this.DetectionIntervalLabel.AutoSize = true;
-            this.DetectionIntervalLabel.Location = new System.Drawing.Point(228, 215);
+            this.DetectionIntervalLabel.Location = new System.Drawing.Point(197, 215);
             this.DetectionIntervalLabel.Name = "DetectionIntervalLabel";
             this.DetectionIntervalLabel.Size = new System.Drawing.Size(125, 15);
             this.DetectionIntervalLabel.TabIndex = 18;
@@ -419,7 +419,7 @@
             // 
             // DetectionIntervalTextBox
             // 
-            this.DetectionIntervalTextBox.Location = new System.Drawing.Point(366, 212);
+            this.DetectionIntervalTextBox.Location = new System.Drawing.Point(328, 212);
             this.DetectionIntervalTextBox.Name = "DetectionIntervalTextBox";
             this.DetectionIntervalTextBox.Size = new System.Drawing.Size(68, 23);
             this.DetectionIntervalTextBox.TabIndex = 17;
@@ -460,7 +460,7 @@
             this.STUN_ServerComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.STUN_ServerComboBox.Location = new System.Drawing.Point(120, 241);
             this.STUN_ServerComboBox.Name = "STUN_ServerComboBox";
-            this.STUN_ServerComboBox.Size = new System.Drawing.Size(314, 23);
+            this.STUN_ServerComboBox.Size = new System.Drawing.Size(276, 23);
             this.STUN_ServerComboBox.TabIndex = 11;
             // 
             // MinimizeWhenStartedCheckBox
@@ -549,7 +549,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(891, 390);
+            this.ClientSize = new System.Drawing.Size(781, 390);
             this.Controls.Add(this.BehaviorGroupBox);
             this.Controls.Add(this.PortGroupBox);
             this.Controls.Add(this.GlobalBypassIPsButton);

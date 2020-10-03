@@ -11,23 +11,17 @@ using OxygenVPN.Forms.Mode;
 using OxygenVPN.Models;
 using OxygenVPN.Utils;
 
-namespace OxygenVPN.Forms
-{
-    public partial class MainForm : Form
-    {
-        public MainForm()
-        {
+namespace OxygenVPN.Forms {
+    public partial class MainForm : Form {
+        public MainForm() {
             InitializeComponent();
 
             // 监听电源事件
             SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
 
-            ModeComboBox.KeyUp += (sender, args) =>
-            {
-                switch (args.KeyData)
-                {
-                    case Keys.Escape:
-                    {
+            ModeComboBox.KeyUp += (sender, args) => {
+                switch (args.KeyData) {
+                case Keys.Escape: {
                         SelectLastMode();
                         return;
                     }
@@ -37,8 +31,7 @@ namespace OxygenVPN.Forms
             CheckForIllegalCrossThreadCalls = false;
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
+        private void MainForm_Load(object sender, EventArgs e) {
             AddAddServerToolStripMenuItems();
 
             OnlyInstance.Called += OnCalled;
@@ -59,85 +52,68 @@ namespace OxygenVPN.Forms
             _sizeHeight = Size.Height;
             _configurationGroupBoxHeight = ConfigurationGroupBox.Height;
             _profileConfigurationHeight = ConfigurationGroupBox.Controls[0].Height / 3; // 因为 AutoSize, 所以得到的是Controls的总高度
-            _profileGroupboxHeight = ProfileGroupBox.Height;
             // 加载快速配置
             InitProfile();
 
             // 打开软件时启动加速，产生开始按钮点击事件
-            if (Global.Settings.StartWhenOpened)
-            {
+            if (Global.Settings.StartWhenOpened) {
                 ControlButton.PerformClick();
             }
 
             // 自动检测延迟
-            Task.Run(() =>
-            {
-                while (true)
-                {
-                    if (State == State.Waiting || State == State.Stopped)
-                    {
+            Task.Run(() => {
+                while (true) {
+                    if (State == State.Waiting || State == State.Stopped) {
                         TestServer();
 
                         Thread.Sleep(10000);
-                    }
-                    else
-                    {
+                    } else {
                         Thread.Sleep(200);
                     }
                 }
             });
 
-            Task.Run(() =>
-            {
+            Task.Run(() => {
                 // 检查更新
-                if (Global.Settings.CheckUpdateWhenOpened)
-                {
+                if (Global.Settings.CheckUpdateWhenOpened) {
                     CheckUpdate();
                 }
             });
 
 
-            Task.Run(async () =>
-            {
+            Task.Run(async () => {
                 // 检查订阅更新
-                if (Global.Settings.UpdateSubscribeatWhenOpened)
-                {
+                if (Global.Settings.UpdateSubscribeatWhenOpened) {
                     await UpdateServersFromSubscribe();
                 }
             });
         }
 
-        private void OnCalled(object sender, OnlyInstance.Commands e)
-        {
-            switch (e)
-            {
-                case OnlyInstance.Commands.Show:
-                    NotifyIcon_MouseDoubleClick(null, null);
-                    break;
-                case OnlyInstance.Commands.Exit:
-                    Exit(true);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(e), e, null);
+        private void OnCalled(object sender, OnlyInstance.Commands e) {
+            switch (e) {
+            case OnlyInstance.Commands.Show:
+                NotifyIcon_MouseDoubleClick(null, null);
+                break;
+            case OnlyInstance.Commands.Exit:
+                Exit(true);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(e), e, null);
             }
         }
 
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing && State != State.Terminating)
-            {
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            if (e.CloseReason == CloseReason.UserClosing && State != State.Terminating) {
                 // 取消"关闭窗口"事件
                 e.Cancel = true; // 取消关闭窗体 
 
                 // 如果未勾选关闭窗口时退出，隐藏至右下角托盘图标
-                if (!Global.Settings.ExitWhenClosed)
-                {
+                if (!Global.Settings.ExitWhenClosed) {
                     // 使关闭时窗口向右下角缩小的效果
                     WindowState = FormWindowState.Minimized;
 
-                    if (_isFirstCloseWindow)
-                    {
+                    if (_isFirstCloseWindow) {
                         // 显示提示语
                         NotifyTip(i18N.Translate("Oxygen VPN is now minimized to the notification bar, double click this icon to restore."));
                         _isFirstCloseWindow = false;
@@ -146,32 +122,28 @@ namespace OxygenVPN.Forms
                     Hide();
                 }
                 // 如果勾选了关闭时退出，自动点击退出按钮
-                else
-                {
+                else {
                     Exit();
                 }
             }
         }
 
-        private void ControlButton_Click(object sender, EventArgs e)
-        {
+        private void ControlButton_Click(object sender, EventArgs e) {
             ControlFun();
         }
 
 
-        private void SettingsButton_Click(object sender, EventArgs e)
-        {
+        private void SettingsButton_Click(object sender, EventArgs e) {
             Hide();
             new SettingForm().ShowDialog();
 
-            if (i18N.LangCode != Global.Settings.Language)
-            {
+            if (i18N.LangCode != Global.Settings.Language) {
                 i18N.Load(Global.Settings.Language);
                 InitText();
                 InitProfile();
             }
 
-            if (ProfileButtons.Count != Global.Settings.ProfileCount)
+            if (comboBoxProfiles.Items.Count != Global.Settings.ProfileCount)
                 InitProfile();
 
             Show();
@@ -180,31 +152,24 @@ namespace OxygenVPN.Forms
         private readonly Dictionary<string, object> _mainFormText = new Dictionary<string, object>();
         private bool _textRecorded;
 
-        private void InitText()
-        {
+        private void InitText() {
             #region Record English
 
-            if (!_textRecorded)
-            {
-                void RecordText(Component component)
-                {
-                    try
-                    {
-                        switch (component)
-                        {
-                            case TextBoxBase _:
-                            case ListControl _:
-                                break;
-                            case Control c:
-                                _mainFormText.Add(c.Name, c.Text);
-                                break;
-                            case ToolStripItem c:
-                                _mainFormText.Add(c.Name, c.Text);
-                                break;
+            if (!_textRecorded) {
+                void RecordText(Component component) {
+                    try {
+                        switch (component) {
+                        case TextBoxBase _:
+                        case ListControl _:
+                            break;
+                        case Control c:
+                            _mainFormText.Add(c.Name, c.Text);
+                            break;
+                        case ToolStripItem c:
+                            _mainFormText.Add(c.Name, c.Text);
+                            break;
                         }
-                    }
-                    catch (ArgumentException)
-                    {
+                    } catch (ArgumentException) {
                         // ignored
                     }
                 }
@@ -218,25 +183,22 @@ namespace OxygenVPN.Forms
 
             #region Translate
 
-            void TranslateText(Component component)
-            {
-                switch (component)
-                {
-                    case TextBoxBase _:
-                    case ListControl _:
-                        break;
-                    case Control c:
+            void TranslateText(Component component) {
+                switch (component) {
+                case TextBoxBase _:
+                case ListControl _:
+                    break;
+                case Control c:
 
-                        c.Text = ControlText(c.Name);
-                        break;
-                    case ToolStripItem c:
-                        c.Text = ControlText(c.Name);
-                        break;
+                    c.Text = ControlText(c.Name);
+                    break;
+                case ToolStripItem c:
+                    c.Text = ControlText(c.Name);
+                    break;
                 }
 
-                string ControlText(string name)
-                {
-                    if(!_mainFormText.ContainsKey(name)) {
+                string ControlText(string name) {
+                    if (!_mainFormText.ContainsKey(name)) {
                         return name;
                     }
 
@@ -255,15 +217,15 @@ namespace OxygenVPN.Forms
 
             #endregion
 
-            UsedBandwidthLabel.Text = $@"{i18N.Translate("Used", ": ")}0 KB";
+            labelUsed.Text = $@"0 KB";
+            labelSpeed.Text = "--";
+            labelNat.Text = "--";
             State = State;
             VersionLabel.Text = UpdateChecker.Version;
         }
 
-        private void Exit(bool forceExit = false)
-        {
-            if (!IsWaiting && !Global.Settings.StopWhenExited && !forceExit)
-            {
+        private void Exit(bool forceExit = false) {
+            if (!IsWaiting && !Global.Settings.StopWhenExited && !forceExit) {
                 MessageBoxX.Show(i18N.Translate("Please press Stop button first"));
 
                 NotifyIcon_MouseDoubleClick(null, null);
@@ -272,8 +234,7 @@ namespace OxygenVPN.Forms
 
             Hide();
             NotifyIcon.Visible = false;
-            if (!IsWaiting)
-            {
+            if (!IsWaiting) {
                 ControlFun();
             }
 
@@ -288,30 +249,25 @@ namespace OxygenVPN.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
-        {
+        private void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e) {
             //不对Netch命令等待状态的电源事件做任何处理
-            if (!State.Equals(State.Waiting))
-            {
-                switch (e.Mode)
-                {
-                    case PowerModes.Suspend: //操作系统即将挂起
-                        Logging.Info("操作系统即将挂起，自动停止===>" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                        ControlFun();
-                        break;
-                    case PowerModes.Resume: //操作系统即将从挂起状态继续
-                        Logging.Info("操作系统即将从挂起状态继续，自动重启===>" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                        ControlFun();
-                        break;
+            if (!State.Equals(State.Waiting)) {
+                switch (e.Mode) {
+                case PowerModes.Suspend: //操作系统即将挂起
+                    Logging.Info("操作系统即将挂起，自动停止===>" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                    ControlFun();
+                    break;
+                case PowerModes.Resume: //操作系统即将从挂起状态继续
+                    Logging.Info("操作系统即将从挂起状态继续，自动重启===>" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                    ControlFun();
+                    break;
                 }
             }
         }
 
-        private void EditServerPictureBox_Click(object sender, EventArgs e)
-        {
+        private void EditServerPictureBox_Click(object sender, EventArgs e) {
             // 当前ServerComboBox中至少有一项
-            if (ServerComboBox.SelectedIndex == -1)
-            {
+            if (ServerComboBox.SelectedIndex == -1) {
                 MessageBoxX.Show(i18N.Translate("Please select a server first"));
                 return;
             }
@@ -324,98 +280,77 @@ namespace OxygenVPN.Forms
             Show();
         }
 
-        private async void SpeedPictureBox_Click(object sender, EventArgs e)
-        {
+        private async void SpeedPictureBox_Click(object sender, EventArgs e) {
             Enabled = false;
             StatusText(i18N.Translate("Testing"));
-            try
-            {
+            try {
                 await Task.Run(TestServer);
-            }
-            finally
-            {
+            } finally {
                 Enabled = true;
                 StatusText(i18N.Translate("Test done"));
                 Refresh();
             }
         }
 
-        private void EditModePictureBox_Click(object sender, EventArgs e)
-        {
+        private void EditModePictureBox_Click(object sender, EventArgs e) {
             // 当前ModeComboBox中至少有一项
-            if (ModeComboBox.SelectedIndex == -1)
-            {
+            if (ModeComboBox.SelectedIndex == -1) {
                 MessageBoxX.Show(i18N.Translate("Please select a mode first"));
                 return;
             }
 
-            var selectedMode = (Models.Mode) ModeComboBox.SelectedItem;
-            switch (selectedMode.Type)
-            {
-                case 0:
-                {
+            var selectedMode = (Models.Mode)ModeComboBox.SelectedItem;
+            switch (selectedMode.Type) {
+            case 0: {
                     Hide();
                     new Process(selectedMode).ShowDialog();
                     Show();
                     break;
                 }
-                default:
-                {
+            default: {
                     MessageBoxX.Show($"Current not support editing {selectedMode.TypeToString()} Mode");
                     break;
                 }
             }
         }
 
-        private void DeleteModePictureBox_Click(object sender, EventArgs e)
-        {
+        private void DeleteModePictureBox_Click(object sender, EventArgs e) {
             // 当前ModeComboBox中至少有一项
-            if (ModeComboBox.Items.Count <= 0 || ModeComboBox.SelectedIndex == -1)
-            {
+            if (ModeComboBox.Items.Count <= 0 || ModeComboBox.SelectedIndex == -1) {
                 MessageBoxX.Show(i18N.Translate("Please select a mode first"));
                 return;
             }
 
-            Modes.Delete((Models.Mode) ModeComboBox.SelectedItem);
+            Modes.Delete((Models.Mode)ModeComboBox.SelectedItem);
             SelectLastMode();
         }
 
-        private void CopyLinkPictureBox_Click(object sender, EventArgs e)
-        {
+        private void CopyLinkPictureBox_Click(object sender, EventArgs e) {
             // 当前ServerComboBox中至少有一项
-            if (ServerComboBox.SelectedIndex == -1)
-            {
+            if (ServerComboBox.SelectedIndex == -1) {
                 MessageBoxX.Show(i18N.Translate("Please select a server first"));
                 return;
             }
 
-            try
-            {
+            try {
                 //听说巨硬BUG经常会炸，所以Catch一下 :D
-                var server = (Server) ServerComboBox.SelectedItem;
+                var server = (Server)ServerComboBox.SelectedItem;
                 string text;
-                if (ModifierKeys == Keys.Control)
-                {
+                if (ModifierKeys == Keys.Control) {
                     text = ShareLink.GetNetchLink(server);
-                }
-                else
-                {
+                } else {
                     text = ShareLink.GetShareLink(server);
                 }
 
                 Clipboard.SetText(text);
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 // ignored
             }
         }
 
-        private void DeleteServerPictureBox_Click(object sender, EventArgs e)
-        {
+        private void DeleteServerPictureBox_Click(object sender, EventArgs e) {
             // 当前 ServerComboBox 中至少有一项
-            if (ServerComboBox.SelectedIndex == -1)
-            {
+            if (ServerComboBox.SelectedIndex == -1) {
                 MessageBoxX.Show(i18N.Translate("Please select a server first"));
                 return;
             }
@@ -424,18 +359,15 @@ namespace OxygenVPN.Forms
             Global.Settings.Server.Remove(ServerComboBox.SelectedItem as Server);
             InitServer();
             Configuration.Save();
-            if (ServerComboBox.Items.Count > 0)
-            {
+            if (ServerComboBox.Items.Count > 0) {
                 ServerComboBox.SelectedIndex = index != 0 ? index - 1 : index;
             }
         }
 
         #region NotifyIcon
 
-        private void ShowMainFormToolStripButton_Click(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Minimized)
-            {
+        private void ShowMainFormToolStripButton_Click(object sender, EventArgs e) {
+            if (WindowState == FormWindowState.Minimized) {
                 Visible = true;
                 ShowInTaskbar = true; // 显示在系统任务栏 
                 WindowState = FormWindowState.Normal; // 还原窗体 
@@ -444,15 +376,12 @@ namespace OxygenVPN.Forms
             Activate();
         }
 
-        private void ExitToolStripButton_Click(object sender, EventArgs e)
-        {
+        private void ExitToolStripButton_Click(object sender, EventArgs e) {
             Exit();
         }
 
-        private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (WindowState == FormWindowState.Minimized)
-            {
+        private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e) {
+            if (WindowState == FormWindowState.Minimized) {
                 Visible = true;
                 ShowInTaskbar = true; //显示在系统任务栏 
                 WindowState = FormWindowState.Normal; //还原窗体
@@ -461,8 +390,7 @@ namespace OxygenVPN.Forms
             Activate();
         }
 
-        private void NotifyTip(string text, int timeout = 0, bool info = true)
-        {
+        private void NotifyTip(string text, int timeout = 0, bool info = true) {
             // 会阻塞线程 timeout 秒
             NotifyIcon.ShowBalloonTip(timeout,
                 UpdateChecker.Name,
@@ -476,31 +404,59 @@ namespace OxygenVPN.Forms
 
         private bool _comboBoxInitialized;
 
-        private void ModeComboBox_SelectedIndexChanged(object sender, EventArgs o)
-        {
+        private void ModeComboBox_SelectedIndexChanged(object sender, EventArgs o) {
             if (!_comboBoxInitialized) return;
-            try
-            {
-                Global.Settings.ModeComboBoxSelectedIndex = Global.Modes.IndexOf((Models.Mode) ModeComboBox.SelectedItem);
-            }
-            catch
-            {
+            try {
+                Global.Settings.ModeComboBoxSelectedIndex = Global.Modes.IndexOf((Models.Mode)ModeComboBox.SelectedItem);
+            } catch {
                 Global.Settings.ModeComboBoxSelectedIndex = 0;
             }
         }
 
-        private void ServerComboBox_SelectedIndexChanged(object sender, EventArgs o)
-        {
+        private void ServerComboBox_SelectedIndexChanged(object sender, EventArgs o) {
             if (!_comboBoxInitialized) return;
             Global.Settings.ServerComboBoxSelectedIndex = ServerComboBox.SelectedIndex;
         }
 
-        private void NatTypeStatusLabel_Click(object sender, EventArgs e)
-        {
-            if (_state == State.Started && MainController.NttTested)
-            {
+        private void NatTypeStatusLabel_Click(object sender, EventArgs e) {
+            if (_state == State.Started && MainController.NttTested) {
                 MainController.NatTest();
             }
+        }
+
+        private void comboBoxProfiles_SelectedIndexChanged(object sender, EventArgs e) {
+            int index = comboBoxProfiles.SelectedIndex;
+            if (index != -1 && !Global.Settings.Profiles[index].IsDummy) {
+                try {
+                    LoadProfile(index);
+                } catch (Exception exception) {
+                    MessageBoxX.Show(exception.Message, LogLevel.ERROR);
+                    return;
+                }
+            }
+        }
+
+        private void SavePorfilePictureBox_Click(object sender, EventArgs e) {
+            int index = comboBoxProfiles.SelectedIndex;
+            if (index != -1) {
+                SaveProfile(index);
+                comboBoxProfiles.Items[index] = ProfileNameText.Text;
+            }
+        }
+
+        private void DeleteProfilePictureBox_Click(object sender, EventArgs e) {
+            int index = comboBoxProfiles.SelectedIndex;
+            if (index != -1) {
+                if (MessageBoxX.Show(i18N.Translate("Remove this Profile?"), confirm: true) != DialogResult.OK) return;
+                RemoveProfile(index);
+                comboBoxProfiles.Items[index] = i18N.Translate("None"); ;
+            }
+        }
+
+
+
+        private void LogButton_Click(object sender, EventArgs e) {
+            Logging.ShowLogForm();
         }
     }
 }

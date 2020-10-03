@@ -19,13 +19,10 @@ namespace OxygenVPN.Forms
         /// <summary>
         ///     当前状态
         /// </summary>
-        public State State
-        {
+        public State State {
             get => _state;
-            private set
-            {
-                void StartDisableItems(bool enabled)
-                {
+            private set {
+                void StartDisableItems(bool enabled) {
                     ServerComboBox.Enabled =
                         ModeComboBox.Enabled =
                             EditModePictureBox.Enabled =
@@ -44,53 +41,59 @@ namespace OxygenVPN.Forms
                 _state = value;
 
                 StatusText(i18N.Translate(StateExtension.GetStatusString(value)));
-                switch (value)
-                {
-                    case State.Waiting:
-                        ControlButton.Enabled = true;
-                        ControlButton.Text = i18N.Translate("Start");
+                switch (value) {
+                case State.Waiting:
+                    ControlButton.Enabled = true;
+                    ControlButton.Text = i18N.Translate("Start");
 
-                        break;
-                    case State.Starting:
-                        ControlButton.Enabled = false;
-                        ControlButton.Text = "...";
+                    break;
+                case State.Starting:
+                    ControlButton.Enabled = false;
+                    ControlButton.Text = "...";
 
-                        ProfileGroupBox.Enabled = false;
-                        StartDisableItems(false);
-                        break;
-                    case State.Started:
-                        ControlButton.Enabled = true;
-                        ControlButton.Text = i18N.Translate("Stop");
+                    comboBoxProfiles.Enabled = false;
+                    tableLayoutPanelProfileOptions.Enabled = false;
+                    StartDisableItems(false);
+                    break;
+                case State.Started:
+                    ControlButton.Enabled = true;
+                    ControlButton.Text = i18N.Translate("Stop");
 
-                        StatusTextAppend(StatusPortInfoText.Value);
+                    StatusTextAppend(StatusPortInfoText.Value);
 
-                        ProfileGroupBox.Enabled = true;
+                    comboBoxProfiles.Enabled = false;
+                    tableLayoutPanelProfileOptions.Enabled = false;
 
-                        UsedBandwidthLabel.Visible /*= UploadSpeedLabel.Visible*/ = DownloadSpeedLabel.Visible = Global.Flags.IsWindows10Upper;
-                        break;
-                    case State.Stopping:
-                        ControlButton.Enabled = false;
-                        ControlButton.Text = "...";
+                    break;
+                case State.Stopping:
+                    ControlButton.Enabled = false;
+                    ControlButton.Text = "...";
 
-                        ProfileGroupBox.Enabled = false;
-                        UsedBandwidthLabel.Visible /*= UploadSpeedLabel.Visible*/ = DownloadSpeedLabel.Visible = false;
-                        NatTypeStatusText();
-                        break;
-                    case State.Stopped:
-                        ControlButton.Enabled = true;
-                        ControlButton.Text = i18N.Translate("Start");
+                    comboBoxProfiles.Enabled = false;
+                    tableLayoutPanelProfileOptions.Enabled = false;
+                    labelUsed.Text = "--";
+                    labelSpeed.Text = "--";
 
-                        LastUploadBandwidth = 0;
-                        LastDownloadBandwidth = 0;
-                        Bandwidth.Stop();
+                    NatTypeStatusText();
+                    break;
+                case State.Stopped:
+                    ControlButton.Enabled = true;
+                    ControlButton.Text = i18N.Translate("Start");
 
-                        ProfileGroupBox.Enabled = true;
-                        StartDisableItems(true);
-                        break;
-                    case State.Terminating:
-                        Dispose();
-                        Environment.Exit(Environment.ExitCode);
-                        return;
+                    LastUploadBandwidth = 0;
+                    LastDownloadBandwidth = 0;
+                    Bandwidth.Stop();
+
+                    comboBoxProfiles.Enabled = true;
+                    tableLayoutPanelProfileOptions.Enabled = true;
+                    labelUsed.Text = "--";
+                    labelSpeed.Text = "--";
+                    StartDisableItems(true);
+                    break;
+                case State.Terminating:
+                    Dispose();
+                    Environment.Exit(Environment.ExitCode);
+                    return;
                 }
             }
         }
@@ -105,23 +108,22 @@ namespace OxygenVPN.Forms
 
             if (State != State.Started)
             {
-                NatTypeStatusLabel.Text = "";
-                NatTypeStatusLabel.Visible = NatTypeStatusLightLabel.Visible = false;
+                labelNat.Text = "--";
+                labelNatLight.Visible = false;
                 return;
             }
 
             if (!string.IsNullOrEmpty(text))
             {
-                NatTypeStatusLabel.Text = $"NAT{i18N.Translate(": ")}{text} {(country != string.Empty ? $"[{country}]" : "")}";
-
+                labelNat.Text = $"{text} {(country != string.Empty ? $"[{country}]" : "")}"; ;
+                
                 UpdateNatTypeLight(int.TryParse(text, out var natType) ? natType : -1);
             }
             else
             {
-                NatTypeStatusLabel.Text = $@"NAT{i18N.Translate(": ", "Test failed")}";
+                labelNat.Text= $@"NAT{i18N.Translate(": ", "Test failed")}";
             }
 
-            NatTypeStatusLabel.Visible = true;
         }
 
         /// <summary>
@@ -132,7 +134,7 @@ namespace OxygenVPN.Forms
         {
             if (natType > 0 && natType < 5)
             {
-                NatTypeStatusLightLabel.Visible = Global.Flags.IsWindows10Upper;
+                labelNatLight.Visible = Global.Flags.IsWindows10Upper;
                 Color c;
                 switch (natType)
                 {
@@ -153,11 +155,11 @@ namespace OxygenVPN.Forms
                         break;
                 }
 
-                NatTypeStatusLightLabel.ForeColor = c;
+                labelNatLight.ForeColor = c;
             }
             else
             {
-                NatTypeStatusLightLabel.Visible = false;
+                labelNatLight.Visible = false;
             }
         }
 

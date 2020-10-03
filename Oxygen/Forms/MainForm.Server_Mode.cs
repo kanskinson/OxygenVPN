@@ -96,14 +96,13 @@ namespace OxygenVPN.Forms
         /// </summary>
         private int _eWidth;
 
-        private void ComboBox_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            try
-            {
-                if (!(sender is ComboBox cbx))
-                {
+        private void ComboBox_DrawItem(object sender, DrawItemEventArgs e) {
+            try {
+                if (!(sender is ComboBox cbx)) {
                     return;
                 }
+
+                int infoOffset = 10;
 
                 // 绘制背景颜色
                 e.Graphics.FillRectangle(new SolidBrush(Color.White), e.Bounds);
@@ -113,10 +112,8 @@ namespace OxygenVPN.Forms
                 // 绘制 备注/名称 字符串
                 e.Graphics.DrawString(cbx.Items[e.Index].ToString(), cbx.Font, new SolidBrush(Color.Black), e.Bounds);
 
-                switch (cbx.Items[e.Index])
-                {
-                    case Models.Server item:
-                    {
+                switch (cbx.Items[e.Index]) {
+                case Models.Server item: {
                         // 计算延迟底色
                         SolidBrush brush;
                         if (item.Delay > 200)
@@ -129,15 +126,14 @@ namespace OxygenVPN.Forms
                             brush = new SolidBrush(Color.Gray);
 
                         // 绘制延迟底色
-                        e.Graphics.FillRectangle(brush, _eWidth * 9, e.Bounds.Y, _eWidth * 2, e.Bounds.Height);
+                        e.Graphics.FillRectangle(brush, _eWidth * 9 + infoOffset, e.Bounds.Y, _eWidth * 2, e.Bounds.Height);
 
                         // 绘制延迟字符串
                         e.Graphics.DrawString(item.Delay.ToString(), cbx.Font, new SolidBrush(Color.Black),
-                            _eWidth * 9 + _eWidth / 30, e.Bounds.Y);
+                            _eWidth * 9 + infoOffset + _eWidth / 30, e.Bounds.Y);
                         break;
                     }
-                    case Models.Mode item:
-                    {
+                case Models.Mode item: {
                         //// 绘制 模式Box 底色
                         //e.Graphics.FillRectangle(new SolidBrush(Color.Gray), _eWidth * 9, e.Bounds.Y, _eWidth,
                         //    e.Bounds.Height);
@@ -148,9 +144,7 @@ namespace OxygenVPN.Forms
                         break;
                     }
                 }
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 // ignored
             }
         }
