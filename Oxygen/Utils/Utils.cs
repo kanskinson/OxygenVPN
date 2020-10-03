@@ -12,30 +12,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaxMind.GeoIP2;
 
-namespace OxygenVPN.Utils
-{
-    public static class Utils
-    {
-        public static bool Open(string path)
-        {
-            try
-            {
-                Process.Start(new ProcessStartInfo
-                {
+namespace OxygenVPN.Utils {
+    public static class Utils {
+        public static bool Open(string path) {
+            try {
+                Process.Start(new ProcessStartInfo {
                     FileName = "explorer.exe",
                     Arguments = path,
                     UseShellExecute = true
                 });
                 return true;
-            }
-            catch
-            {
+            } catch {
                 return false;
             }
         }
 
-        public static async Task<int> TCPingAsync(IPAddress ip, int port, int timeout = 1000, CancellationToken ct = default)
-        {
+        public static async Task<int> TCPingAsync(IPAddress ip, int port, int timeout = 1000, CancellationToken ct = default) {
             using var client = new TcpClient(ip.AddressFamily);
             var task = client.ConnectAsync(ip, port);
 
@@ -45,8 +37,7 @@ namespace OxygenVPN.Utils
             var resTask = await Task.WhenAny(Task.Delay(timeout, ct), task);
 
             stopwatch.Stop();
-            if (resTask == task && client.Connected)
-            {
+            if (resTask == task && client.Connected) {
                 var t = Convert.ToInt32(stopwatch.Elapsed.TotalMilliseconds);
                 return t;
             }
@@ -54,151 +45,111 @@ namespace OxygenVPN.Utils
             return timeout;
         }
 
-        public static string GetCityCode(string Hostname)
-        {
-            if (Hostname.Contains(":"))
-            {
+        public static string GetCityCode(string Hostname) {
+            if (Hostname.Contains(":")) {
                 Hostname = Hostname.Split(':')[0];
             }
 
             string Country;
-            try
-            {
+            try {
                 var databaseReader = new DatabaseReader("bin\\GeoLite2-Country.mmdb");
 
-                if (IPAddress.TryParse(Hostname, out _))
-                {
+                if (IPAddress.TryParse(Hostname, out _)) {
                     Country = databaseReader.Country(Hostname).Country.IsoCode;
-                }
-                else
-                {
+                } else {
                     var DnsResult = DNS.Lookup(Hostname);
 
-                    if (DnsResult != null)
-                    {
+                    if (DnsResult != null) {
                         Country = databaseReader.Country(DnsResult).Country.IsoCode;
-                    }
-                    else
-                    {
+                    } else {
                         Country = "Unknown";
                     }
                 }
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 Country = "Unknown";
             }
 
             return Country == null ? "Unknown" : Country;
         }
 
-        public static string SHA256CheckSum(string filePath)
-        {
-            try
-            {
+        public static string SHA256CheckSum(string filePath) {
+            try {
                 var SHA256 = System.Security.Cryptography.SHA256.Create();
                 var fileStream = File.OpenRead(filePath);
                 return SHA256.ComputeHash(fileStream).Aggregate(string.Empty, (current, b) => current + b.ToString("x2"));
-            }
-            catch
-            {
+            } catch {
                 return "";
             }
         }
 
-        public static void KillProcessByName(string name)
-        {
-            try
-            {
+        public static void KillProcessByName(string name) {
+            try {
                 foreach (var p in Process.GetProcessesByName(name))
                     if (p.MainModule != null && p.MainModule.FileName.StartsWith(Global.OxygenVPNDir))
                         p.Kill();
-            }
-            catch (Win32Exception e)
-            {
-                Logging.Error($"结束进程 {name} 错误：" + e.Message);
-            }
-            catch (Exception)
-            {
+            } catch (Win32Exception e) {
+                Logging.Error($"An error occurred while ending process {name}:" + e.Message);
+            } catch (Exception) {
                 // ignored
             }
         }
 
         public static string FileVersion(string file) => File.Exists(file) ? FileVersionInfo.GetVersionInfo(file).FileVersion : string.Empty;
 
-        public static bool SearchOutboundAdapter(bool log = true)
-        {
+        public static bool SearchOutboundAdapter(bool log = true) {
             IPAddress localEnd;
-            try
-            {
+            try {
                 localEnd = WebUtil.BestLocalEndPoint(new IPEndPoint(0x72727272, 53)).Address;
-            }
-            catch
-            {
+            } catch {
                 return false;
             }
 
-            try
-            {
+            try {
                 // 根据 IP 寻找 出口适配器
-                Global.Outbound.Adapter = NetworkInterface.GetAllNetworkInterfaces().First(_ =>
-                {
-                    try
-                    {
-                        return _.GetIPProperties().UnicastAddresses.Any(ip =>
-                        {
-                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork && ip.Address.ToString().Equals(localEnd.ToString()))
-                            {
+                Global.Outbound.Adapter = NetworkInterface.GetAllNetworkInterfaces().First(_ => {
+                    try {
+                        return _.GetIPProperties().UnicastAddresses.Any(ip => {
+                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork && ip.Address.ToString().Equals(localEnd.ToString())) {
                                 Global.Outbound.Index = _.GetIPProperties().GetIPv4Properties().Index;
                                 return true;
                             }
 
                             return false;
                         });
-                    }
-                    catch
-                    {
+                    } catch {
                         return false;
                     }
                 });
                 Global.Outbound.Gateway = Global.Outbound.Adapter.GetIPProperties().GatewayAddresses[0].Address;
-                if (log)
-                {
-                    Logging.Info($"出口 IPv4 地址：{Global.Outbound.Address}");
-                    Logging.Info($"出口 网关 地址：{Global.Outbound.Gateway}");
-                    Logging.Info($"出口适配器：{Global.Outbound.Adapter.Name} {Global.Outbound.Adapter.Id} {Global.Outbound.Adapter.Description}, index: {Global.Outbound.Index}");
+                if (log) {
+                    Logging.Info($"Out IPv4 address: {Global.Outbound.Address}");
+                    Logging.Info($"In gateway address: {Global.Outbound.Gateway}");
+                    Logging.Info($"Out adapter: {Global.Outbound.Adapter.Name} {Global.Outbound.Adapter.Id} {Global.Outbound.Adapter.Description}, index: {Global.Outbound.Index}");
                 }
 
                 return true;
-            }
-            catch (Exception e)
-            {
-                Logging.Error($"找不到出口IP所在网卡: {e}");
+            } catch (Exception e) {
+                Logging.Error($"Unable to find the network card where the exit IP is located: {e}");
                 return false;
             }
         }
 
-        public static void LoggingAdapters(string id)
-        {
+        public static void LoggingAdapters(string id) {
             var adapter = NetworkInterface.GetAllNetworkInterfaces().First(adapter => adapter.Id == id);
-            Logging.Warning($"检索此网卡信息出错: {adapter.Name} {adapter.Id} {adapter.Description}");
+            Logging.Warning($"There was an error in retrieving this network card information: {adapter.Name} {adapter.Id} {adapter.Description}");
         }
 
-        public static void DrawCenterComboBox(object sender, DrawItemEventArgs e)
-        {
-            if (sender is ComboBox cbx)
-            {
+        public static void DrawCenterComboBox(object sender, DrawItemEventArgs e) {
+            if (sender is ComboBox cbx) {
                 e.DrawBackground();
 
-                if (e.Index >= 0)
-                {
+                if (e.Index >= 0) {
                     var brush = new SolidBrush(cbx.ForeColor);
 
                     if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
                         brush = SystemBrushes.HighlightText as SolidBrush;
 
-                    e.Graphics.DrawString(cbx.Items[e.Index].ToString(), cbx.Font, brush, e.Bounds, new StringFormat
-                    {
+                    e.Graphics.DrawString(cbx.Items[e.Index].ToString(), cbx.Font, brush, e.Bounds, new StringFormat {
                         LineAlignment = StringAlignment.Center,
                         Alignment = StringAlignment.Center
                     });
@@ -206,44 +157,38 @@ namespace OxygenVPN.Utils
             }
         }
 
-        public static void ComponentIterator(Component component, Action<Component> func)
-        {
+        public static void ComponentIterator(Component component, Action<Component> func) {
             func.Invoke(component);
-            switch (component)
-            {
-                case ToolStripMenuItem toolStripMenuItem:
-                    // Iterator Menu strip sub item
-                    foreach (var item in toolStripMenuItem.DropDownItems.Cast<ToolStripItem>())
-                    {
-                        ComponentIterator(item, func);
-                    }
+            switch (component) {
+            case ToolStripMenuItem toolStripMenuItem:
+                // Iterator Menu strip sub item
+                foreach (var item in toolStripMenuItem.DropDownItems.Cast<ToolStripItem>()) {
+                    ComponentIterator(item, func);
+                }
 
-                    break;
-                case MenuStrip menuStrip:
-                    // Menu Strip
-                    foreach (var item in menuStrip.Items.Cast<ToolStripItem>())
-                    {
-                        ComponentIterator(item, func);
-                    }
+                break;
+            case MenuStrip menuStrip:
+                // Menu Strip
+                foreach (var item in menuStrip.Items.Cast<ToolStripItem>()) {
+                    ComponentIterator(item, func);
+                }
 
-                    break;
-                case ContextMenuStrip contextMenuStrip:
-                    foreach (var item in contextMenuStrip.Items.Cast<ToolStripItem>())
-                    {
-                        ComponentIterator(item, func);
-                    }
+                break;
+            case ContextMenuStrip contextMenuStrip:
+                foreach (var item in contextMenuStrip.Items.Cast<ToolStripItem>()) {
+                    ComponentIterator(item, func);
+                }
 
-                    break;
-                case Control control:
-                    foreach (var c in control.Controls.Cast<Control>())
-                    {
-                        ComponentIterator(c, func);
-                    }
+                break;
+            case Control control:
+                foreach (var c in control.Controls.Cast<Control>()) {
+                    ComponentIterator(c, func);
+                }
 
-                    if (control.ContextMenuStrip != null)
-                        ComponentIterator(control.ContextMenuStrip, func);
+                if (control.ContextMenuStrip != null)
+                    ComponentIterator(control.ContextMenuStrip, func);
 
-                    break;
+                break;
             }
         }
     }

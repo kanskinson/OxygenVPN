@@ -10,10 +10,8 @@ using OxygenVPN.Controllers;
 using OxygenVPN.Forms;
 using OxygenVPN.Models;
 
-namespace OxygenVPN
-{
-    public static class Global
-    {
+namespace OxygenVPN {
+    public static class Global {
         /// <summary>
         ///     换行
         /// </summary>
@@ -26,12 +24,9 @@ namespace OxygenVPN
         /// </summary>
         public static MainForm MainForm;
 
-        public static class Flags
-        {
-            static Flags()
-            {
-                Task.Run(() =>
-                {
+        public static class Flags {
+            static Flags() {
+                Task.Run(() => {
                     SupportFakeDns = new TUNTAPController().TestFakeDNS();
                     IsWindows10Upper = Environment.OSVersion.Version.Major >= 10;
                 });
@@ -44,8 +39,7 @@ namespace OxygenVPN
         /// <summary>
         ///		出口适配器
         /// </summary>
-        public static class Outbound
-        {
+        public static class Outbound {
             /// <summary>
             ///		索引
             /// </summary>
@@ -67,8 +61,7 @@ namespace OxygenVPN
         /// <summary>
         ///		TUN/TAP 适配器
         /// </summary>
-        public static class TUNTAP
-        {
+        public static class TUNTAP {
             /// <summary>
             ///		适配器
             /// </summary>

@@ -1,10 +1,8 @@
-﻿namespace OxygenVPN.Models
-{
+﻿namespace OxygenVPN.Models {
     /// <summary>
     ///     状态
     /// </summary>
-    public enum State
-    {
+    public enum State {
         /// <summary>
         ///     等待命令中
         /// </summary>
@@ -37,10 +35,8 @@
         Terminating
     }
 
-    public static class StateExtension
-    {
-        public static string GetStatusString(State state)
-        {
+    public static class StateExtension {
+        public static string GetStatusString(State state) {
             if (state == State.Waiting)
                 return "Waiting for command";
             return state.ToString();

@@ -284,7 +284,7 @@ namespace OxygenVPN.Controllers {
                 Global.TUNTAP.Adapter = adapter;
                 Global.TUNTAP.Index = adapter.GetIPProperties().GetIPv4Properties().Index;
                 Logging.Info(
-                    $"TAP adapter：{adapter.Name} {adapter.Id} {adapter.Description}, index: {Global.TUNTAP.Index}");
+                    $"TAP adapter: {adapter.Name} {adapter.Id} {adapter.Description}, index: {Global.TUNTAP.Index}");
             } catch (Exception e) {
                 var msg = e switch
                 {

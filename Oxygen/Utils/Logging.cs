@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using OxygenVPN.Models;
 
@@ -57,10 +58,11 @@ namespace OxygenVPN.Utils {
             lock (FileLock) {
                 File.AppendAllText(LogFile, line);
             }
-            if(loggingFormInstance !=null && !loggingFormInstance.IsDisposed) {
+            if (loggingFormInstance != null && loggingFormInstance.CanLog) {
+
                 loggingFormInstance.AppendText(line);
             }
         }
-       
+
     }
 }

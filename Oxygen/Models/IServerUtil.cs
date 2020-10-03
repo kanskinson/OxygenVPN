@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
-namespace OxygenVPN.Models
-{
-    public interface IServerUtil
-    {
+namespace OxygenVPN.Models {
+    public interface IServerUtil {
         /// <summary>
         ///     Collection order basis
         /// </summary>

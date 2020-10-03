@@ -1,7 +1,5 @@
-﻿namespace OxygenVPN.Models
-{
-    public class SubscribeLink
-    {
+﻿namespace OxygenVPN.Models {
+    public class SubscribeLink {
         /// <summary>
         ///     备注
         /// </summary>

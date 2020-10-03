@@ -15,6 +15,9 @@ namespace OxygenVPN.Utils {
         public LoggingForm() {
             InitializeComponent();
         }
+        bool closing = false;
+
+        public bool CanLog { get { return !this.IsDisposed && !closing; } }
 
         private void LoggingForm_Load(object sender, EventArgs e) {
             Logging.Info("Show log window");
@@ -27,7 +30,7 @@ namespace OxygenVPN.Utils {
         }
 
         private void openLogFileToolStripMenuItem_Click(object sender, EventArgs e) {
-            Process.Start("notepad", Logging.LogFile);
+            Utils.Open(Logging.LogFile);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -49,7 +52,7 @@ namespace OxygenVPN.Utils {
         private void backColorToolStripMenuItem_Click(object sender, EventArgs e) {
             ColorDialog colorDialog = new ColorDialog();
             colorDialog.Color = textBoxLogs.BackColor;
-            if(colorDialog.ShowDialog() == DialogResult.OK) {
+            if (colorDialog.ShowDialog() == DialogResult.OK) {
                 textBoxLogs.BackColor = colorDialog.Color;
             }
         }
@@ -64,10 +67,17 @@ namespace OxygenVPN.Utils {
 
         public void SetText(string text) {
             textBoxLogs.Text = text;
+            FormatText();
         }
 
         public void AppendText(string text) {
-            textBoxLogs.Text += text;
+            textBoxLogs.AppendText(text);
+            FormatText();
+            textBoxLogs.ScrollToCaret();
+        }
+
+        private void FormatText() {
+
         }
 
     }

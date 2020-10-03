@@ -254,11 +254,11 @@ namespace OxygenVPN.Forms {
             if (!State.Equals(State.Waiting)) {
                 switch (e.Mode) {
                 case PowerModes.Suspend: //操作系统即将挂起
-                    Logging.Info("操作系统即将挂起，自动停止===>" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                    Logging.Info("The operating system is about to suspend,Automatic stop>>" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
                     ControlFun();
                     break;
                 case PowerModes.Resume: //操作系统即将从挂起状态继续
-                    Logging.Info("操作系统即将从挂起状态继续，自动重启===>" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                    Logging.Info("The operating system is about to resume from the suspended state and restart automatically>>" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
                     ControlFun();
                     break;
                 }
@@ -439,8 +439,13 @@ namespace OxygenVPN.Forms {
         private void SavePorfilePictureBox_Click(object sender, EventArgs e) {
             int index = comboBoxProfiles.SelectedIndex;
             if (index != -1) {
-                SaveProfile(index);
-                comboBoxProfiles.Items[index] = $"[{index + 1}] {ProfileNameText.Text}";
+                try {
+                    SaveProfile(index);
+                    comboBoxProfiles.Items[index] = $"[{index + 1}] {ProfileNameText.Text}";
+                } catch (Exception exception) {
+                    MessageBoxX.Show(exception.Message, LogLevel.ERROR);
+                    return;
+                }               
             }
         }
 

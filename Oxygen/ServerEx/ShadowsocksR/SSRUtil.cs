@@ -122,19 +122,19 @@ namespace OxygenVPN.ServerEx.ShadowsocksR
             var server = (ShadowsocksR) s;
             if (!SSRGlobal.EncryptMethods.Contains(server.EncryptMethod))
             {
-                Logging.Error($"不支持的 SSR 加密方式：{server.EncryptMethod}");
+                Logging.Error($"SS encryption mode not supported: {server.EncryptMethod}");
                 return false;
             }
 
             if (!SSRGlobal.Protocols.Contains(server.Protocol))
             {
-                Logging.Error($"不支持的 SSR 协议：{server.Protocol}");
+                Logging.Error($"Unsupported SSR protocol: {server.Protocol}");
                 return false;
             }
 
             if (!SSRGlobal.OBFSs.Contains(server.OBFS))
             {
-                Logging.Error($"不支持的 SSR 混淆：{server.OBFS}");
+                Logging.Error($"Unsupported SSR obfuscation: {server.OBFS}");
                 return false;
             }
 

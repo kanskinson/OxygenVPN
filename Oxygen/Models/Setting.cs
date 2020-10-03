@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace OxygenVPN.Models
-{
+namespace OxygenVPN.Models {
     /// <summary>
     ///		TUN/TAP 适配器配置类
     /// </summary>
-    public class TUNTAPConfig
-    {
+    public class TUNTAPConfig {
         /// <summary>
         ///		地址
         /// </summary>
@@ -46,8 +44,7 @@ namespace OxygenVPN.Models
     /// <summary>
     ///     用于读取和写入的配置的类
     /// </summary>
-    public class Setting
-    {
+    public class Setting {
         /// <summary>
         ///		服务器选择位置
         /// </summary>

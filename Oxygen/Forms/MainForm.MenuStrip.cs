@@ -298,7 +298,7 @@ namespace OxygenVPN.Forms
             catch (Exception e)
             {
                 NotifyTip(i18N.Translate("ACL update failed") + "\n" + e.Message, info: false);
-                Logging.Error("更新 ACL 失败！" + e);
+                Logging.Error("Update ACL failed！" + e);
             }
             finally
             {

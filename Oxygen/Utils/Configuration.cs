@@ -3,10 +3,8 @@ using OxygenVPN.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace OxygenVPN.Utils
-{
-    public static class Configuration
-    {
+namespace OxygenVPN.Utils {
+    public static class Configuration {
         /// <summary>
         ///     数据目录
         /// </summary>
@@ -20,30 +18,21 @@ namespace OxygenVPN.Utils
         /// <summary>
         ///     加载配置
         /// </summary>
-        public static void Load()
-        {
-            if (Directory.Exists(DATA_DIR) && File.Exists(SETTINGS_JSON))
-            {
-                try
-                {
-                    var settingJObject = (JObject) JsonConvert.DeserializeObject(File.ReadAllText(SETTINGS_JSON));
+        public static void Load() {
+            if (Directory.Exists(DATA_DIR) && File.Exists(SETTINGS_JSON)) {
+                try {
+                    var settingJObject = (JObject)JsonConvert.DeserializeObject(File.ReadAllText(SETTINGS_JSON));
                     Global.Settings = settingJObject?.ToObject<Setting>() ?? new Setting();
                     Global.Settings.Server.Clear();
 
-                    foreach (JObject server in settingJObject["Server"])
-                    {
+                    foreach (JObject server in settingJObject["Server"]) {
                         var serverResult = Servers.ParseJObject(server);
                         if (serverResult != null)
                             Global.Settings.Server.Add(serverResult);
                     }
+                } catch (JsonException) {
                 }
-
-                catch (JsonException)
-                {
-                }
-            }
-            else
-            {
+            } else {
                 // 弹出提示
                 i18N.Load("System");
 
@@ -55,10 +44,8 @@ namespace OxygenVPN.Utils
         /// <summary>
         ///     保存配置
         /// </summary>
-        public static void Save()
-        {
-            if (!Directory.Exists(DATA_DIR))
-            {
+        public static void Save() {
+            if (!Directory.Exists(DATA_DIR)) {
                 Directory.CreateDirectory(DATA_DIR);
             }
 

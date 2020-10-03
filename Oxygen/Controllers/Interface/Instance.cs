@@ -65,7 +65,7 @@ namespace OxygenVPN.Controllers
             }
             catch (Win32Exception e)
             {
-                Logging.Error($"停止 {MainFile} 错误：\n" + e);
+                Logging.Error($"Stop {MainFile} error: \n" + e);
             }
             catch
             {
@@ -216,7 +216,7 @@ namespace OxygenVPN.Controllers
             }
             catch (Exception exception)
             {
-                Logging.Warning($"Write {Name} log error：\n" + exception.Message);
+                Logging.Warning($"Write {Name} log error: \n" + exception.Message);
             }
         }
 

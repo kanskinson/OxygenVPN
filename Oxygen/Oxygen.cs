@@ -7,29 +7,23 @@ using OxygenVPN.Controllers;
 using OxygenVPN.Forms;
 using OxygenVPN.Utils;
 
-namespace OxygenVPN
-{
-    public static class Oxygen
-    {
+namespace OxygenVPN {
+    public static class Oxygen {
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
         [STAThread]
-        public static void Main(string[] args)
-        {
+        public static void Main(string[] args) {
             // 创建互斥体防止多次运行
-            using (var mutex = new Mutex(false, "Global\\Oxygen"))
-            {
+            using (var mutex = new Mutex(false, "Global\\Oxygen")) {
                 // 设置当前目录
                 Directory.SetCurrentDirectory(Global.OxygenVPNDir);
                 Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Process) + ";" + Path.Combine(Global.OxygenVPNDir, "bin"), EnvironmentVariableTarget.Process);
 
                 // 预创建目录
-                var directories = new[] {"mode", "data", "i18n", "logging"};
-                foreach (var item in directories)
-                {
-                    if (!Directory.Exists(item))
-                    {
+                var directories = new[] { "mode", "data", "i18n", "logging" };
+                foreach (var item in directories) {
+                    if (!Directory.Exists(item)) {
                         Directory.CreateDirectory(item);
                     }
                 }
@@ -41,8 +35,7 @@ namespace OxygenVPN
                 i18N.Load(Global.Settings.Language);
 
                 // 检查是否已经运行
-                if (!mutex.WaitOne(0, false))
-                {
+                if (!mutex.WaitOne(0, false)) {
                     OnlyInstance.Send(OnlyInstance.Commands.Show);
                     Logging.Info("Wakeup Singletone");
 
@@ -51,28 +44,23 @@ namespace OxygenVPN
                 }
 
                 // 清理上一次的日志文件，防止淤积占用磁盘空间
-                if (Directory.Exists("logging"))
-                {
+                if (Directory.Exists("logging")) {
                     var directory = new DirectoryInfo("logging");
 
-                    foreach (var file in directory.GetFiles())
-                    {
+                    foreach (var file in directory.GetFiles()) {
                         file.Delete();
                     }
 
-                    foreach (var dir in directory.GetDirectories())
-                    {
+                    foreach (var dir in directory.GetDirectories()) {
                         dir.Delete(true);
                     }
                 }
 
                 Logging.Info($"Version: {UpdateChecker.Owner}/{UpdateChecker.Repo}@{UpdateChecker.Version}");
-                Task.Run(() =>
-                {
+                Task.Run(() => {
                     Logging.Info($"Exe SHA256: {Utils.Utils.SHA256CheckSum(Application.ExecutablePath)}");
                 });
-                Task.Run(() =>
-                {
+                Task.Run(() => {
                     Logging.Info("Singletone");
                     OnlyInstance.Server();
                 });
@@ -87,10 +75,9 @@ namespace OxygenVPN
             }
         }
 
-        public static void Application_OnException(object sender, ThreadExceptionEventArgs e)
-        {
+        public static void Application_OnException(object sender, ThreadExceptionEventArgs e) {
             Logging.Error(e.Exception.ToString());
-            Utils.Utils.Open(Logging.LogFile);
+            Logging.ShowLogForm();
         }
     }
 }

@@ -8,10 +8,8 @@ using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using OxygenVPN.Utils;
 
-namespace OxygenVPN.Forms.Mode
-{
-    public partial class Process : Form
-    {
+namespace OxygenVPN.Forms.Mode {
+    public partial class Process : Form {
         /// <summary>
         ///     被编辑的模式
         /// </summary>
@@ -26,10 +24,8 @@ namespace OxygenVPN.Forms.Mode
         ///		编辑模式
         /// </summary>
         /// <param name="mode">模式</param>
-        public Process(Models.Mode mode)
-        {
-            if (mode.Type != 0)
-            {
+        public Process(Models.Mode mode) {
+            if (mode.Type != 0) {
                 throw new Exception("请传入进程模式");
             }
 
@@ -52,8 +48,7 @@ namespace OxygenVPN.Forms.Mode
             RemarkTextBox.Text = mode.Remark;
         }
 
-        public Process()
-        {
+        public Process() {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
 
@@ -64,52 +59,39 @@ namespace OxygenVPN.Forms.Mode
         ///		扫描目录
         /// </summary>
         /// <param name="DirName">路径</param>
-        public void ScanDirectory(string DirName)
-        {
-            try
-            {
+        public void ScanDirectory(string DirName) {
+            try {
                 var RDirInfo = new DirectoryInfo(DirName);
-                if (!RDirInfo.Exists)
-                {
+                if (!RDirInfo.Exists) {
                     return;
                 }
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 return;
             }
 
             var DirStack = new Stack<string>();
             DirStack.Push(DirName);
 
-            while (DirStack.Count > 0)
-            {
+            while (DirStack.Count > 0) {
                 var DirInfo = new DirectoryInfo(DirStack.Pop());
-                try
-                {
-                    foreach (var DirChildInfo in DirInfo.GetDirectories())
-                    {
+                try {
+                    foreach (var DirChildInfo in DirInfo.GetDirectories()) {
                         DirStack.Push(DirChildInfo.FullName);
                     }
 
-                    foreach (var FileChildInfo in DirInfo.GetFiles())
-                    {
-                        if (FileChildInfo.Name.EndsWith(".exe") && !RuleListBox.Items.Contains(FileChildInfo.Name))
-                        {
+                    foreach (var FileChildInfo in DirInfo.GetFiles()) {
+                        if (FileChildInfo.Name.EndsWith(".exe") && !RuleListBox.Items.Contains(FileChildInfo.Name)) {
                             RuleListBox.Items.Add(FileChildInfo.Name);
                             Edited = true;
                         }
                     }
-                }
-                catch (Exception)
-                {
+                } catch (Exception) {
                     // ignored
                 }
             }
         }
 
-        public void ModeForm_Load(object sender, EventArgs e)
-        {
+        public void ModeForm_Load(object sender, EventArgs e) {
             i18N.TranslateForm(this);
             i18N.Translate(contextMenuStrip);
         }
@@ -117,56 +99,44 @@ namespace OxygenVPN.Forms.Mode
         /// <summary>
         /// listBox右键菜单
         /// </summary>
-        private void RuleListBox_MouseUp(object sender, MouseEventArgs e)
-        {
+        private void RuleListBox_MouseUp(object sender, MouseEventArgs e) {
             RuleListBox.SelectedIndex = RuleListBox.IndexFromPoint(e.X, e.Y);
             if (RuleListBox.SelectedIndex == -1)
                 return;
-            if (e.Button == MouseButtons.Right)
-            {
+            if (e.Button == MouseButtons.Right) {
                 contextMenuStrip.Show(RuleListBox, e.Location);
             }
         }
 
-        void deleteRule_Click(object sender, EventArgs e)
-        {
+        void deleteRule_Click(object sender, EventArgs e) {
             if (RuleListBox.SelectedIndex == -1) return;
             RuleListBox.Items.RemoveAt(RuleListBox.SelectedIndex);
             Edited = true;
         }
 
-        private async void AddButton_Click(object sender, EventArgs e)
-        {
-            await Task.Run(() =>
-            {
-                if (!string.IsNullOrWhiteSpace(ProcessNameTextBox.Text))
-                {
+        private async void AddButton_Click(object sender, EventArgs e) {
+            await Task.Run(() => {
+                if (!string.IsNullOrWhiteSpace(ProcessNameTextBox.Text)) {
                     var process = ProcessNameTextBox.Text;
-                    if (!process.EndsWith(".exe"))
-                    {
+                    if (!process.EndsWith(".exe")) {
                         process += ".exe";
                     }
 
-                    if (!RuleListBox.Items.Contains(process))
-                    {
+                    if (!RuleListBox.Items.Contains(process)) {
                         RuleListBox.Items.Add(process);
                     }
 
                     Edited = true;
                     RuleListBox.SelectedIndex = RuleListBox.Items.IndexOf(process);
                     ProcessNameTextBox.Text = string.Empty;
-                }
-                else
-                {
+                } else {
                     MessageBoxX.Show(i18N.Translate("Please enter an process name (xxx.exe)"));
                 }
             });
         }
 
-        private void ScanButton_Click(object sender, EventArgs e)
-        {
-            var dialog = new CommonOpenFileDialog
-            {
+        private void ScanButton_Click(object sender, EventArgs e) {
+            var dialog = new CommonOpenFileDialog {
                 IsFolderPicker = true,
                 Multiselect = false,
                 Title = i18N.Translate("Select a folder"),
@@ -174,35 +144,29 @@ namespace OxygenVPN.Forms.Mode
                 EnsurePathExists = true,
                 NavigateToShortcut = true
             };
-            if (dialog.ShowDialog(Win32Native.GetForegroundWindow()) == CommonFileDialogResult.Ok)
-            {
+            if (dialog.ShowDialog(Win32Native.GetForegroundWindow()) == CommonFileDialogResult.Ok) {
                 ScanDirectory(dialog.FileName);
                 MessageBoxX.Show(i18N.Translate("Scan completed"));
             }
         }
 
-        public void ControlButton_Click(object sender, EventArgs e)
-        {
-            if (RuleListBox.Items.Count == 0)
-            {
+        public void ControlButton_Click(object sender, EventArgs e) {
+            if (RuleListBox.Items.Count == 0) {
                 MessageBoxX.Show(i18N.Translate("Unable to add empty rule"));
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(RemarkTextBox.Text))
-            {
+            if (string.IsNullOrWhiteSpace(RemarkTextBox.Text)) {
                 MessageBoxX.Show(i18N.Translate("Please enter a mode remark"));
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(FilenameTextBox.Text))
-            {
+            if (string.IsNullOrWhiteSpace(FilenameTextBox.Text)) {
                 MessageBoxX.Show(i18N.Translate("Please enter a mode filename"));
                 return;
             }
 
-            if (_mode != null)
-            {
+            if (_mode != null) {
                 _mode.Remark = RemarkTextBox.Text;
                 _mode.Rule.Clear();
                 _mode.Rule.AddRange(RuleListBox.Items.Cast<string>());
@@ -211,18 +175,14 @@ namespace OxygenVPN.Forms.Mode
                 Global.MainForm.InitMode();
                 Edited = false;
                 MessageBoxX.Show(i18N.Translate("Mode updated successfully"));
-            }
-            else
-            {
+            } else {
                 var fullName = Modes.GetFullPath(FilenameTextBox.Text + ".txt");
-                if (File.Exists(fullName))
-                {
+                if (File.Exists(fullName)) {
                     MessageBoxX.Show(i18N.Translate("File already exists.\n Please Change the filename"));
                     return;
                 }
 
-                var mode = new Models.Mode
-                {
+                var mode = new Models.Mode {
                     BypassChina = false,
                     FileName = FilenameTextBox.Text,
                     Type = 0,
@@ -238,16 +198,12 @@ namespace OxygenVPN.Forms.Mode
             Close();
         }
 
-        private async void RemarkTextBox_TextChanged(object sender, EventArgs e)
-        {
-            await Task.Run(() =>
-            {
-                if (!UseCustomFilenameBox.Checked)
-                {
+        private async void RemarkTextBox_TextChanged(object sender, EventArgs e) {
+            await Task.Run(() => {
+                if (!UseCustomFilenameBox.Checked) {
                     var invalidFileChars = Path.GetInvalidFileNameChars();
                     var fileName = new StringBuilder(RemarkTextBox.Text);
-                    foreach (var c in invalidFileChars)
-                    {
+                    foreach (var c in invalidFileChars) {
                         fileName.Replace(c, '_');
                     }
 
@@ -256,8 +212,7 @@ namespace OxygenVPN.Forms.Mode
             });
         }
 
-        private void UseCustomFilenameBox_CheckedChanged(object sender, EventArgs e)
-        {
+        private void UseCustomFilenameBox_CheckedChanged(object sender, EventArgs e) {
             FilenameTextBox.Enabled = UseCustomFilenameBox.Checked;
         }
     }

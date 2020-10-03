@@ -173,7 +173,7 @@ namespace OxygenVPN.ServerEx.Shadowsocks
             var server = (Shadowsocks) s;
             if (!SSGlobal.EncryptMethods.Contains(server.EncryptMethod))
             {
-                Logging.Error($"不支持的 SS 加密方式：{server.EncryptMethod}");
+                Logging.Error($"SS encryption mode not supported: {server.EncryptMethod}");
                 {
                     return false;
                 }

@@ -1,9 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace OxygenVPN
-{
-    public enum NameList : int
-    {
+namespace OxygenVPN {
+    public enum NameList : int {
         TYPE_FILTERLOOPBACK,
         TYPE_FILTERTCP,
         TYPE_FILTERUDP,
@@ -14,8 +12,7 @@ namespace OxygenVPN
         TYPE_CLRNAME
     }
 
-    public static class NativeMethods
-    {
+    public static class NativeMethods {
         /// <summary>
         ///		创建路由规则
         /// </summary>

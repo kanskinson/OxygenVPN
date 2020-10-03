@@ -1,7 +1,5 @@
-namespace OxygenVPN.Models
-{
-    public enum LogLevel
-    {
+namespace OxygenVPN.Models {
+    public enum LogLevel {
         INFO,
         WARNING,
         ERROR

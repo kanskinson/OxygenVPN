@@ -22,7 +22,7 @@ namespace OxygenVPN.Controllers {
         /// <param name="mode">模式</param>
         /// <returns>是否启动成功</returns>
         public static async Task<bool> Start(Server server, Mode mode) {
-            Logging.Info($"启动主控制器: {server.Type} [{mode.Type}]{mode.Remark}");
+            Logging.Info($"Start main controller: {server.Type} [{mode.Type}]{mode.Remark}");
 
             if (server.IsSocks5() && mode.Type == 4) {
                 return false;

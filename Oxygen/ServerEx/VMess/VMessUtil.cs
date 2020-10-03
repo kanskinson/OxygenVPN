@@ -126,13 +126,13 @@ namespace OxygenVPN.ServerEx.VMess
             var server = (VMess) s;
             if (!VMessGlobal.TransferProtocols.Contains(server.TransferProtocol))
             {
-                Logging.Error($"不支持的 VMess 传输协议：{server.TransferProtocol}");
+                Logging.Error($"Unsupported vmess transport protocol: {server.TransferProtocol}");
                 return false;
             }
 
             if (server.FakeType.Length != 0 && !VMessGlobal.FakeTypes.Contains(server.FakeType))
             {
-                Logging.Error($"不支持的 VMess 伪装类型：{server.FakeType}");
+                Logging.Error($"Unsupported vmess masquerade type: {server.FakeType}");
                 return false;
             }
 
@@ -140,7 +140,7 @@ namespace OxygenVPN.ServerEx.VMess
             {
                 if (!VMessGlobal.QUIC.Contains(server.QUICSecure))
                 {
-                    Logging.Error($"不支持的 VMess QUIC 加密方式：{server.QUICSecure}");
+                    Logging.Error($"Unsupported vmess quic encryption: {server.QUICSecure}");
                     return false;
                 }
             }

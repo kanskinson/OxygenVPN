@@ -31,7 +31,7 @@ namespace OxygenVPN.Controllers {
                 BinDriver = "Win-7.sys";
                 break;
             default:
-                Logging.Error($"Unsupported OS：{Environment.OSVersion.Version}");
+                Logging.Error($"Unsupported OS: {Environment.OSVersion.Version}");
                 return;
             }
 
@@ -43,7 +43,7 @@ namespace OxygenVPN.Controllers {
         }
 
         public override bool Start(Server s, Mode mode) {
-            Logging.Info("内置驱动版本: " + Utils.Utils.FileVersion(BinDriver));
+            Logging.Info("Driver version: " + Utils.Utils.FileVersion(BinDriver));
             if (Utils.Utils.FileVersion(SystemDriver) != Utils.Utils.FileVersion(BinDriver)) {
                 if (File.Exists(SystemDriver)) {
                     Logging.Info("Driver version: " + Utils.Utils.FileVersion(SystemDriver));
@@ -135,7 +135,7 @@ namespace OxygenVPN.Controllers {
             if (result == NF_STATUS.NF_STATUS_SUCCESS) {
                 Logging.Info("Driver installed successfully");
             } else {
-                Logging.Error($"Failed to register driver, return：{result}");
+                Logging.Error($"Failed to register driver, return: {result}");
                 return false;
             }
 

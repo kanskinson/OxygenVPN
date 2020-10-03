@@ -4,18 +4,15 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OxygenVPN.Utils
-{
-    public class WebUtil
-    {
+namespace OxygenVPN.Utils {
+    public class WebUtil {
         public const string DefaultUserAgent =
             @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36";
 
         private static int DefaultGetTimeout => Global.Settings.RequestTimeout;
 
-        public static HttpWebRequest CreateRequest(string url, int? timeout = null, string userAgent = null)
-        {
-            var req = (HttpWebRequest) WebRequest.Create(url);
+        public static HttpWebRequest CreateRequest(string url, int? timeout = null, string userAgent = null) {
+            var req = (HttpWebRequest)WebRequest.Create(url);
             req.UserAgent = string.IsNullOrEmpty(userAgent) ? DefaultUserAgent : userAgent;
             req.Accept = "*/*";
             req.KeepAlive = true;
@@ -25,11 +22,10 @@ namespace OxygenVPN.Utils
             return req;
         }
 
-        public static IPEndPoint BestLocalEndPoint(IPEndPoint remoteIPEndPoint)
-        {
+        public static IPEndPoint BestLocalEndPoint(IPEndPoint remoteIPEndPoint) {
             var testSocket = new Socket(remoteIPEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
             testSocket.Connect(remoteIPEndPoint);
-            return (IPEndPoint) testSocket.LocalEndPoint;
+            return (IPEndPoint)testSocket.LocalEndPoint;
         }
 
         /// <summary>
@@ -37,9 +33,8 @@ namespace OxygenVPN.Utils
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public static async Task<byte[]> DownloadBytesAsync(HttpWebRequest req)
-        {
-            using var webResponse = (HttpWebResponse) await req.GetResponseAsync();
+        public static async Task<byte[]> DownloadBytesAsync(HttpWebRequest req) {
+            using var webResponse = (HttpWebResponse)await req.GetResponseAsync();
             using var memoryStream = new MemoryStream();
             using var input = webResponse.GetResponseStream();
 
@@ -53,8 +48,7 @@ namespace OxygenVPN.Utils
         /// <param name="req"></param>
         /// <param name="encoding">编码，默认UTF-8</param>
         /// <returns></returns>
-        public static async Task<string> DownloadStringAsync(HttpWebRequest req, string encoding = "UTF-8")
-        {
+        public static async Task<string> DownloadStringAsync(HttpWebRequest req, string encoding = "UTF-8") {
             using var webResponse = await req.GetResponseAsync();
             using var responseStream = webResponse.GetResponseStream();
             using var streamReader = new StreamReader(responseStream, Encoding.GetEncoding(encoding));
@@ -68,9 +62,8 @@ namespace OxygenVPN.Utils
         /// <param name="req"></param>
         /// <param name="fileFullPath"></param>
         /// <returns></returns>
-        public static async Task DownloadFileAsync(HttpWebRequest req, string fileFullPath)
-        {
-            using var webResponse = (HttpWebResponse) await req.GetResponseAsync();
+        public static async Task DownloadFileAsync(HttpWebRequest req, string fileFullPath) {
+            using var webResponse = (HttpWebResponse)await req.GetResponseAsync();
             using var input = webResponse.GetResponseStream();
             using var fileStream = File.OpenWrite(fileFullPath);
 

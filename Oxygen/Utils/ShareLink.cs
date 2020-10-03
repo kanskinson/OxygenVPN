@@ -9,10 +9,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Server = OxygenVPN.Models.Server;
 
-namespace OxygenVPN.Utils
-{
-    public static class ShareLink
-    {
+namespace OxygenVPN.Utils {
+    public static class ShareLink {
         #region Utils
 
         /// <summary>
@@ -20,8 +18,7 @@ namespace OxygenVPN.Utils
         /// </summary>
         /// <param name="text">需要解码的字符串</param>
         /// <returns>解码后的字符串</returns>
-        public static string URLSafeBase64Decode(string text)
-        {
+        public static string URLSafeBase64Decode(string text) {
             return Encoding.UTF8.GetString(Convert.FromBase64String(text.Replace("-", "+").Replace("_", "/").PadRight(text.Length + (4 - text.Length % 4) % 4, '=')));
         }
 
@@ -30,14 +27,12 @@ namespace OxygenVPN.Utils
         /// </summary>
         /// <param name="text">需要加密的字符串</param>
         /// <returns>加密后的字符串</returns>
-        public static string URLSafeBase64Encode(string text)
-        {
+        public static string URLSafeBase64Encode(string text) {
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(text)).Replace("+", "-").Replace("/", "_").Replace("=", "");
         }
 
-        private static string RemoveEmoji(string text)
-        {
-            byte[] emojiBytes = {240, 159};
+        private static string RemoveEmoji(string text) {
+            byte[] emojiBytes = { 240, 159 };
             var remark = Encoding.UTF8.GetBytes(text);
             var startIndex = 0;
             while (remark.Length > startIndex + 1 && remark[startIndex] == emojiBytes[0] && remark[startIndex + 1] == emojiBytes[1])
@@ -46,10 +41,8 @@ namespace OxygenVPN.Utils
         }
 
 
-        public static string UnBase64String(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
+        public static string UnBase64String(string value) {
+            if (string.IsNullOrEmpty(value)) {
                 return "";
             }
 
@@ -57,10 +50,8 @@ namespace OxygenVPN.Utils
             return Encoding.UTF8.GetString(bytes);
         }
 
-        public static string ToBase64String(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
+        public static string ToBase64String(string value) {
+            if (string.IsNullOrEmpty(value)) {
                 return "";
             }
 
@@ -68,14 +59,11 @@ namespace OxygenVPN.Utils
             return Convert.ToBase64String(bytes);
         }
 
-        public static Dictionary<string, string> ParseParam(string paramStr)
-        {
+        public static Dictionary<string, string> ParseParam(string paramStr) {
             var paramsDict = new Dictionary<string, string>();
             var obfsParams = paramStr.Split('&');
-            foreach (var p in obfsParams)
-            {
-                if (p.IndexOf('=') > 0)
-                {
+            foreach (var p in obfsParams) {
+                if (p.IndexOf('=') > 0) {
                     var index = p.IndexOf('=');
                     var key = p.Substring(0, index);
                     var val = p.Substring(index + 1);
@@ -86,14 +74,11 @@ namespace OxygenVPN.Utils
             return paramsDict;
         }
 
-        public static IEnumerable<string> GetLines(this string str, bool removeEmptyLines = true)
-        {
+        public static IEnumerable<string> GetLines(this string str, bool removeEmptyLines = true) {
             using var sr = new StringReader(str);
             string line;
-            while ((line = sr.ReadLine()) != null)
-            {
-                if (removeEmptyLines && string.IsNullOrWhiteSpace(line))
-                {
+            while ((line = sr.ReadLine()) != null) {
+                if (removeEmptyLines && string.IsNullOrWhiteSpace(line)) {
                     continue;
                 }
 
@@ -103,29 +88,21 @@ namespace OxygenVPN.Utils
 
         #endregion
 
-        public static string GetShareLink(Server server)
-        {
+        public static string GetShareLink(Server server) {
             return Servers.GetUtilByTypeName(server.Type).GetShareLink(server);
         }
 
-        public static List<Server> ParseText(string text)
-        {
-            try
-            {
+        public static List<Server> ParseText(string text) {
+            try {
                 text = URLSafeBase64Decode(text);
-            }
-            catch
-            {
+            } catch {
                 // ignored
             }
 
             var list = new List<Server>();
-            try
-            {
-                try
-                {
-                    list.AddRange(JsonConvert.DeserializeObject<List<ShadowsocksConfig>>(text).Select(server => new Shadowsocks
-                    {
+            try {
+                try {
+                    list.AddRange(JsonConvert.DeserializeObject<List<ShadowsocksConfig>>(text).Select(server => new Shadowsocks {
                         Hostname = server.server,
                         Port = server.server_port,
                         EncryptMethod = server.method,
@@ -134,26 +111,19 @@ namespace OxygenVPN.Utils
                         Plugin = server.plugin,
                         PluginOption = server.plugin_opts
                     }));
-                }
-                catch (JsonReaderException)
-                {
-                    foreach (var line in text.GetLines())
-                    {
+                } catch (JsonReaderException) {
+                    foreach (var line in text.GetLines()) {
                         var servers = ParseUri(line);
-                        if (servers != null)
-                        {
+                        if (servers != null) {
                             list.AddRange(servers);
                         }
                     }
                 }
 
-                if (list.Count == 0)
-                {
+                if (list.Count == 0) {
                     return null;
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Logging.Error(e.ToString());
                 return null;
             }
@@ -161,81 +131,64 @@ namespace OxygenVPN.Utils
             return list;
         }
 
-        private static IEnumerable<Server> ParseUri(string text)
-        {
+        private static IEnumerable<Server> ParseUri(string text) {
             var list = new List<Server>();
 
-            try
-            {
-                if (text.StartsWith("tg://socks?") || text.StartsWith("https://t.me/socks?"))
-                {
+            try {
+                if (text.StartsWith("tg://socks?") || text.StartsWith("https://t.me/socks?")) {
                     list.AddRange(Servers.GetUtilByTypeName("Socks5").ParseUri(text));
-                }
-                else if (text.StartsWith("Netch://"))
-                {
+                } else if (text.StartsWith("Netch://")) {
                     list.Add(ParseNetchUri(text));
-                }
-                else
-                {
+                } else {
                     var scheme = GetUriScheme(text);
                     var util = Servers.GetUtilByUriScheme(scheme);
-                    if (util == null)
-                    {
-                        Logging.Warning($"无法处理 {scheme} 协议订阅链接");
+                    if (util == null) {
+                        Logging.Warning($"Unable to process {scheme} protocol subscription link");
                         return null;
                     }
 
                     list.AddRange(util.ParseUri(text));
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Logging.Error(e.ToString());
                 return null;
             }
 
-            foreach (var node in list)
-            {
+            foreach (var node in list) {
                 node.Remark = RemoveEmoji(node.Remark);
             }
 
             return list.Where(s => s != null);
         }
 
-        private static string GetUriScheme(string text)
-        {
+        private static string GetUriScheme(string text) {
             var endIndex = text.IndexOf("://", StringComparison.Ordinal);
             if (endIndex == -1)
                 throw new UriFormatException("Text is not a URI");
             return text.Substring(0, endIndex);
         }
 
-        private static Server ParseNetchUri(string text)
-        {
+        private static Server ParseNetchUri(string text) {
             text = text.Substring(8);
-            var NetchLink = (JObject) JsonConvert.DeserializeObject(URLSafeBase64Decode(text));
-            if (NetchLink == null)
-            {
+            var NetchLink = (JObject)JsonConvert.DeserializeObject(URLSafeBase64Decode(text));
+            if (NetchLink == null) {
                 return null;
             }
 
-            if (string.IsNullOrEmpty((string) NetchLink["Hostname"]))
-            {
+            if (string.IsNullOrEmpty((string)NetchLink["Hostname"])) {
                 return null;
             }
 
-            if (!ushort.TryParse((string) NetchLink["Port"], out _))
-            {
+            if (!ushort.TryParse((string)NetchLink["Port"], out _)) {
                 return null;
             }
 
-            var type = (string) NetchLink["Type"];
+            var type = (string)NetchLink["Type"];
             var s = Servers.GetUtilByTypeName(type).ParseJObject(NetchLink);
             return Servers.GetUtilByTypeName(s.Type).CheckServer(s) ? s : null;
         }
 
-        public static string GetNetchLink(Server s)
-        {
+        public static string GetNetchLink(Server s) {
             return "Netch://" + URLSafeBase64Encode(JsonConvert.SerializeObject(s));
         }
     }

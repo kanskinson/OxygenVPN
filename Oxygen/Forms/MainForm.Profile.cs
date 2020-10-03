@@ -78,6 +78,14 @@ namespace OxygenVPN.Forms {
             var selectedMode = (Models.Mode)ModeComboBox.SelectedItem;
             var name = ProfileNameText.Text;
 
+            if(selectedServer == null) {
+                throw new Exception("Server not found.");
+            }
+
+            if(selectedMode == null) {
+                throw new Exception("Mode not found.");
+            }
+
             Global.Settings.Profiles[index] = new Profile(selectedServer, selectedMode, name);
         }
 

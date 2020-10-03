@@ -3,10 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using Microsoft.Win32;
 
-namespace OxygenVPN.Utils
-{
-    public static class TUNTAP
-    {
+namespace OxygenVPN.Utils {
+    public static class TUNTAP {
         public static string TUNTAP_COMPONENT_ID_0901 = "tap0901";
         public static string TUNTAP_COMPONENT_ID_0801 = "tap0801";
         public static string NETWORK_KEY = "SYSTEM\\CurrentControlSet\\Control\\Network\\{4D36E972-E325-11CE-BFC1-08002BE10318}";
@@ -16,28 +14,21 @@ namespace OxygenVPN.Utils
         ///     获取 TUN/TAP 适配器 ID
         /// </summary>
         /// <returns>适配器 ID</returns>
-        public static string GetComponentID()
-        {
-            try
-            {
+        public static string GetComponentID() {
+            try {
                 var adaptersRegistry = Registry.LocalMachine.OpenSubKey(ADAPTER_KEY);
 
-                foreach (var adapterRegistryName in adaptersRegistry.GetSubKeyNames())
-                {
-                    if (adapterRegistryName != "Configuration" && adapterRegistryName != "Properties")
-                    {
+                foreach (var adapterRegistryName in adaptersRegistry.GetSubKeyNames()) {
+                    if (adapterRegistryName != "Configuration" && adapterRegistryName != "Properties") {
                         var adapterRegistry = adaptersRegistry.OpenSubKey(adapterRegistryName);
 
                         var adapterComponentId = adapterRegistry.GetValue("ComponentId", "").ToString();
-                        if (adapterComponentId == TUNTAP_COMPONENT_ID_0901 || adapterComponentId == TUNTAP_COMPONENT_ID_0801)
-                        {
+                        if (adapterComponentId == TUNTAP_COMPONENT_ID_0901 || adapterComponentId == TUNTAP_COMPONENT_ID_0801) {
                             return adapterRegistry.GetValue("NetCfgInstanceId", "").ToString();
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Logging.Warning(e.ToString());
             }
 
@@ -49,8 +40,7 @@ namespace OxygenVPN.Utils
         /// </summary>
         /// <param name="componentId">适配器 ID</param>
         /// <returns>适配器名称</returns>
-        public static string GetName(string componentId)
-        {
+        public static string GetName(string componentId) {
             var registry = Registry.LocalMachine.OpenSubKey(string.Format("{0}\\{1}\\Connection", NETWORK_KEY, componentId));
 
             return registry.GetValue("Name", "").ToString();
@@ -60,18 +50,16 @@ namespace OxygenVPN.Utils
         ///     创建 TUN/TAP 适配器
         /// </summary>
         /// <returns></returns>
-        public static bool Create()
-        {
+        public static bool Create() {
             return false;
         }
 
         /// <summary>
         /// 卸载tap网卡
         /// </summary>
-        public static void deltapall()
-        {
-            Logging.Info("正在卸载 TUN/TAP 适配器");
-            var installProcess = new Process {StartInfo = {WindowStyle = ProcessWindowStyle.Normal, FileName = Path.Combine("bin/tap-driver", "deltapall.bat")}};
+        public static void deltapall() {
+            Logging.Info("Uninstalling TUN/TAP adapter");
+            var installProcess = new Process { StartInfo = { WindowStyle = ProcessWindowStyle.Normal, FileName = Path.Combine("bin/tap-driver", "deltapall.bat") } };
             installProcess.Start();
             installProcess.WaitForExit();
             installProcess.Close();
@@ -80,11 +68,10 @@ namespace OxygenVPN.Utils
         /// <summary>
         /// 安装tap网卡
         /// </summary>
-        public static void addtap()
-        {
-            Logging.Info("正在安装 TUN/TAP 适配器");
+        public static void addtap() {
+            Logging.Info("Installing TUN/TAP adapter");
             //安装Tap Driver
-            var installProcess = new Process {StartInfo = {WindowStyle = ProcessWindowStyle.Normal, FileName = Path.Combine("bin/tap-driver", "addtap.bat")}};
+            var installProcess = new Process { StartInfo = { WindowStyle = ProcessWindowStyle.Normal, FileName = Path.Combine("bin/tap-driver", "addtap.bat") } };
             installProcess.Start();
             installProcess.WaitForExit();
             installProcess.Close();
