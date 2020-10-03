@@ -4,19 +4,13 @@ using OxygenVPN.Utils;
 using NETCONLib;
 using WinFW;
 
-namespace OxygenVPN.Controllers
-{
-    public class ICSController
-    {
-        public static bool Enabled
-        {
-            get
-            {
+namespace OxygenVPN.Controllers {
+    public class ICSController {
+        public static bool Enabled {
+            get {
                 TUNTAPController.SearchTapAdapter();
-                foreach (NetworkConnection connection in new NetworkConnectionCollection())
-                {
-                    if (connection.DeviceName == Global.TUNTAP.Adapter.Description)
-                    {
+                foreach (NetworkConnection connection in new NetworkConnectionCollection()) {
+                    if (connection.DeviceName == Global.TUNTAP.Adapter.Description) {
                         return connection.SharingEnabled;
                     }
                 }
@@ -25,18 +19,15 @@ namespace OxygenVPN.Controllers
             }
         }
 
-        public static bool Enable()
-        {
+        public static bool Enable() {
             Utils.Utils.SearchOutboundAdapter();
             TUNTAPController.SearchTapAdapter();
 
-            if (Global.TUNTAP.Adapter == null || Global.Outbound.Adapter == null)
-            {
+            if (Global.TUNTAP.Adapter == null || Global.Outbound.Adapter == null) {
                 return false;
             }
 
-            try
-            {
+            try {
                 CleanupWMISharingEntries();
 
                 #region Save Outbound IP Config
@@ -53,37 +44,31 @@ namespace OxygenVPN.Controllers
 
                 var outboundWmi = GetManagementObjectByDeviceNameOrDefault(Global.Outbound.Adapter.Description);
 
-                if (outboundWmi == null)
-                {
+                if (outboundWmi == null) {
                     return false;
                 }
 
-                if (!(dhcpEnabled = (bool) outboundWmi["DHCPEnabled"]))
-                {
-                    ipAddress = (string[]) outboundWmi["IPAddress"];
-                    subnetMask = (string[]) outboundWmi["IPSubnet"];
-                    gateway = (string[]) outboundWmi["DefaultIPGateway"];
-                    gatewayMetric = (ushort[]) outboundWmi["GatewayCostMetric"];
-                    dns = (string[]) outboundWmi["DNSServerSearchOrder"];
+                if (!(dhcpEnabled = (bool)outboundWmi["DHCPEnabled"])) {
+                    ipAddress = (string[])outboundWmi["IPAddress"];
+                    subnetMask = (string[])outboundWmi["IPSubnet"];
+                    gateway = (string[])outboundWmi["DefaultIPGateway"];
+                    gatewayMetric = (ushort[])outboundWmi["GatewayCostMetric"];
+                    dns = (string[])outboundWmi["DNSServerSearchOrder"];
 
-                    ipAddress = new[] {ipAddress[0]};
-                    subnetMask = new[] {subnetMask[0]};
+                    ipAddress = new[] { ipAddress[0] };
+                    subnetMask = new[] { subnetMask[0] };
                 }
 
                 #endregion
 
                 #region Setting ICS
 
-                foreach (NetworkConnection connection in new NetworkConnectionCollection())
-                {
-                    if (connection.DeviceName == Global.TUNTAP.Adapter.Description)
-                    {
+                foreach (NetworkConnection connection in new NetworkConnectionCollection()) {
+                    if (connection.DeviceName == Global.TUNTAP.Adapter.Description) {
                         if (connection.SharingEnabled)
                             connection.DisableSharing();
                         connection.EnableSharing(tagSHARINGCONNECTIONTYPE.ICSSHARINGTYPE_PUBLIC);
-                    }
-                    else if (connection.DeviceName == Global.Outbound.Adapter.Description)
-                    {
+                    } else if (connection.DeviceName == Global.Outbound.Adapter.Description) {
                         if (connection.SharingEnabled)
                             connection.DisableSharing();
                         connection.EnableSharing(tagSHARINGCONNECTIONTYPE.ICSSHARINGTYPE_PRIVATE);
@@ -94,12 +79,9 @@ namespace OxygenVPN.Controllers
 
                 #region Reset Outbound IP Config
 
-                if (dhcpEnabled)
-                {
+                if (dhcpEnabled) {
                     outboundWmi.InvokeMethod("EnableDHCP", null, null);
-                }
-                else
-                {
+                } else {
                     //Set static IP and subnet mask
                     var newIP = outboundWmi.GetMethodParameters("EnableStatic");
                     newIP["IPAddress"] = ipAddress;
@@ -119,28 +101,21 @@ namespace OxygenVPN.Controllers
                 #endregion
 
                 return true;
-            }
-            catch (Exception e)
-            {
-                try
-                {
+            } catch (Exception e) {
+                try {
                     Disable();
-                }
-                catch
-                {
+                } catch {
                     // ignored
                 }
 
-                Logging.Error($"网络连接共享设置失败: {e}");
+                Logging.Error($"Network connection sharing settings faile: {e}");
 
                 return false;
             }
         }
 
-        public static void Disable()
-        {
-            foreach (NetworkConnection connection in new NetworkConnectionCollection())
-            {
+        public static void Disable() {
+            foreach (NetworkConnection connection in new NetworkConnectionCollection()) {
                 if (connection.SharingEnabled)
                     connection.DisableSharing();
             }
@@ -148,8 +123,7 @@ namespace OxygenVPN.Controllers
             CleanupWMISharingEntries();
         }
 
-        private static void CleanupWMISharingEntries()
-        {
+        private static void CleanupWMISharingEntries() {
             var scope = new ManagementScope("root\\Microsoft\\HomeNet");
             scope.Connect();
 
@@ -158,22 +132,18 @@ namespace OxygenVPN.Controllers
 
             var query = new ObjectQuery("SELECT * FROM HNet_ConnectionProperties");
             var srchr = new ManagementObjectSearcher(scope, query);
-            foreach (ManagementObject entry in srchr.Get())
-            {
-                if ((bool) entry["IsIcsPrivate"])
+            foreach (ManagementObject entry in srchr.Get()) {
+                if ((bool)entry["IsIcsPrivate"])
                     entry["IsIcsPrivate"] = false;
-                if ((bool) entry["IsIcsPublic"])
+                if ((bool)entry["IsIcsPublic"])
                     entry["IsIcsPublic"] = false;
                 entry.Put(options);
             }
         }
 
-        public static ManagementObject GetManagementObjectByDeviceNameOrDefault(string deviceName)
-        {
-            foreach (ManagementObject mo in new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances())
-            {
-                if (((string) mo["Caption"]).EndsWith(deviceName))
-                {
+        public static ManagementObject GetManagementObjectByDeviceNameOrDefault(string deviceName) {
+            foreach (ManagementObject mo in new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances()) {
+                if (((string)mo["Caption"]).EndsWith(deviceName)) {
                     return mo;
                 }
             }

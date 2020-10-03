@@ -7,10 +7,8 @@ using OxygenVPN.Models;
 using OxygenVPN.Utils;
 using nfapinet;
 
-namespace OxygenVPN.Controllers
-{
-    public class NFController : ModeController
-    {
+namespace OxygenVPN.Controllers {
+    public class NFController : ModeController {
         public override bool TestNatRequired { get; } = true;
 
         private static readonly ServiceController NFService = new ServiceController("netfilter2");
@@ -19,43 +17,37 @@ namespace OxygenVPN.Controllers
         private static readonly string SystemDriver = $"{Environment.SystemDirectory}\\drivers\\netfilter2.sys";
         private static string _sysDns;
 
-        static NFController()
-        {
-            switch ($"{Environment.OSVersion.Version.Major}.{Environment.OSVersion.Version.Minor}")
-            {
-                case "10.0":
-                    BinDriver = "Win-10.sys";
-                    break;
-                case "6.3":
-                case "6.2":
-                    BinDriver = "Win-8.sys";
-                    break;
-                case "6.1":
-                case "6.0":
-                    BinDriver = "Win-7.sys";
-                    break;
-                default:
-                    Logging.Error($"不支持的系统版本：{Environment.OSVersion.Version}");
-                    return;
+        static NFController() {
+            switch ($"{Environment.OSVersion.Version.Major}.{Environment.OSVersion.Version.Minor}") {
+            case "10.0":
+                BinDriver = "Win-10.sys";
+                break;
+            case "6.3":
+            case "6.2":
+                BinDriver = "Win-8.sys";
+                break;
+            case "6.1":
+            case "6.0":
+                BinDriver = "Win-7.sys";
+                break;
+            default:
+                Logging.Error($"Unsupported OS：{Environment.OSVersion.Version}");
+                return;
             }
 
             BinDriver = "bin\\" + BinDriver;
         }
 
-        public NFController()
-        {
+        public NFController() {
             Name = "Redirector";
         }
 
-        public override bool Start(Server s, Mode mode)
-        {
+        public override bool Start(Server s, Mode mode) {
             Logging.Info("内置驱动版本: " + Utils.Utils.FileVersion(BinDriver));
-            if (Utils.Utils.FileVersion(SystemDriver) != Utils.Utils.FileVersion(BinDriver))
-            {
-                if (File.Exists(SystemDriver))
-                {
-                    Logging.Info("系统驱动版本: " + Utils.Utils.FileVersion(SystemDriver));
-                    Logging.Info("更新驱动");
+            if (Utils.Utils.FileVersion(SystemDriver) != Utils.Utils.FileVersion(BinDriver)) {
+                if (File.Exists(SystemDriver)) {
+                    Logging.Info("Driver version: " + Utils.Utils.FileVersion(SystemDriver));
+                    Logging.Info("Update drivers");
                     UninstallDriver();
                 }
 
@@ -63,34 +55,28 @@ namespace OxygenVPN.Controllers
                     return false;
             }
 
-            aio_dial((int) NameList.TYPE_CLRNAME, "");
-            foreach (var rule in mode.Rule)
-            {
-                aio_dial((int) NameList.TYPE_ADDNAME, rule);
+            aio_dial((int)NameList.TYPE_CLRNAME, "");
+            foreach (var rule in mode.Rule) {
+                aio_dial((int)NameList.TYPE_ADDNAME, rule);
             }
 
-            aio_dial((int) NameList.TYPE_ADDNAME, "NTT.exe");
+            aio_dial((int)NameList.TYPE_ADDNAME, "NTT.exe");
 
-            if (s.IsSocks5())
-            {
+            if (s.IsSocks5()) {
                 var result = DNS.Lookup(s.Hostname);
-                if (result == null)
-                {
-                    Logging.Info("无法解析服务器 IP 地址");
+                if (result == null) {
+                    Logging.Info("The server IP address could not be resolved");
                     return false;
                 }
 
-                aio_dial((int) NameList.TYPE_TCPHOST, $"{result}:{s.Port}");
-                aio_dial((int) NameList.TYPE_UDPHOST, $"{result}:{s.Port}");
-            }
-            else
-            {
-                aio_dial((int) NameList.TYPE_TCPHOST, $"127.0.0.1:{Global.Settings.Socks5LocalPort}");
-                aio_dial((int) NameList.TYPE_UDPHOST, $"127.0.0.1:{Global.Settings.Socks5LocalPort}");
+                aio_dial((int)NameList.TYPE_TCPHOST, $"{result}:{s.Port}");
+                aio_dial((int)NameList.TYPE_UDPHOST, $"{result}:{s.Port}");
+            } else {
+                aio_dial((int)NameList.TYPE_TCPHOST, $"127.0.0.1:{Global.Settings.Socks5LocalPort}");
+                aio_dial((int)NameList.TYPE_UDPHOST, $"127.0.0.1:{Global.Settings.Socks5LocalPort}");
             }
 
-            if (Global.Settings.ModifySystemDNS)
-            {
+            if (Global.Settings.ModifySystemDNS) {
                 // 备份并替换系统 DNS
                 _sysDns = DNS.OutboundDNS;
                 DNS.OutboundDNS = "1.1.1.1,8.8.8.8";
@@ -99,10 +85,8 @@ namespace OxygenVPN.Controllers
             return aio_init();
         }
 
-        public override void Stop()
-        {
-            Task.Run(() =>
-            {
+        public override void Stop() {
+            Task.Run(() => {
                 if (Global.Settings.ModifySystemDNS)
                     //恢复系统DNS
                     DNS.OutboundDNS = _sysDns;
@@ -136,29 +120,22 @@ namespace OxygenVPN.Controllers
         ///     安装 NF 驱动
         /// </summary>
         /// <returns>驱动是否安装成功</returns>
-        public static bool InstallDriver()
-        {
-            Logging.Info("安装 NF 驱动");
-            try
-            {
+        public static bool InstallDriver() {
+            Logging.Info("Install NF driver");
+            try {
                 File.Copy(BinDriver, SystemDriver);
-            }
-            catch (Exception e)
-            {
-                Logging.Error("驱动复制失败\n" + e);
+            } catch (Exception e) {
+                Logging.Error("Drive copy failed\n" + e);
                 return false;
             }
 
             Global.MainForm.StatusText(i18N.Translate("Register driver"));
             // 注册驱动文件
             var result = NFAPI.nf_registerDriver("netfilter2");
-            if (result == NF_STATUS.NF_STATUS_SUCCESS)
-            {
-                Logging.Info("驱动安装成功");
-            }
-            else
-            {
-                Logging.Error($"注册驱动失败，返回值：{result}");
+            if (result == NF_STATUS.NF_STATUS_SUCCESS) {
+                Logging.Info("Driver installed successfully");
+            } else {
+                Logging.Error($"Failed to register driver, return：{result}");
                 return false;
             }
 
@@ -169,20 +146,15 @@ namespace OxygenVPN.Controllers
         ///     卸载 NF 驱动
         /// </summary>
         /// <returns>是否成功卸载</returns>
-        public static bool UninstallDriver()
-        {
+        public static bool UninstallDriver() {
             Global.MainForm.StatusText(i18N.Translate("Uninstalling NF Service"));
             Logging.Info("卸载 NF 驱动");
-            try
-            {
-                if (NFService.Status == ServiceControllerStatus.Running)
-                {
+            try {
+                if (NFService.Status == ServiceControllerStatus.Running) {
                     NFService.Stop();
                     NFService.WaitForStatus(ServiceControllerStatus.Stopped);
                 }
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 // ignored
             }
 

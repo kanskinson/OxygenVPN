@@ -144,19 +144,19 @@ namespace OxygenVPN.Controllers
                         case State.Started:
                             return true;
                         case State.Stopped:
-                            Logging.Error($"{Name} 控制器启动失败");
+                            Logging.Error($"{Name} controller start failure");
                             Stop();
                             return false;
                     }
                 }
 
-                Logging.Error($"{Name} 控制器启动超时");
+                Logging.Error($"{Name} controller start timeout");
                 Stop();
                 return false;
             }
             catch (Exception e)
             {
-                Logging.Error($"{Name} 控制器启动失败:\n {e}");
+                Logging.Error($"{Name} controller start failure:\n {e}");
                 return false;
             }
         }
@@ -216,7 +216,7 @@ namespace OxygenVPN.Controllers
             }
             catch (Exception exception)
             {
-                Logging.Warning($"写入 {Name} 日志错误：\n" + exception.Message);
+                Logging.Warning($"Write {Name} log error：\n" + exception.Message);
             }
         }
 

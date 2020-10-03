@@ -6,10 +6,8 @@ using OxygenVPN.Utils;
 using static OxygenVPN.Forms.MainForm;
 using static OxygenVPN.Utils.PortHelper;
 
-namespace OxygenVPN.Controllers
-{
-    public static class MainController
-    {
+namespace OxygenVPN.Controllers {
+    public static class MainController {
         public static ServerController ServerController { get; private set; }
         public static ModeController ModeController { get; private set; }
 
@@ -23,34 +21,28 @@ namespace OxygenVPN.Controllers
         /// <param name="server">服务器</param>
         /// <param name="mode">模式</param>
         /// <returns>是否启动成功</returns>
-        public static async Task<bool> Start(Server server, Mode mode)
-        {
+        public static async Task<bool> Start(Server server, Mode mode) {
             Logging.Info($"启动主控制器: {server.Type} [{mode.Type}]{mode.Remark}");
 
-            if (server.IsSocks5() && mode.Type == 4)
-            {
+            if (server.IsSocks5() && mode.Type == 4) {
                 return false;
             }
 
             NativeMethods.FlushDNSResolverCache();
 
-            if (!Utils.Utils.SearchOutboundAdapter(false))
-            {
+            if (!Utils.Utils.SearchOutboundAdapter(false)) {
                 MessageBoxX.Show("No internet connection");
                 return false;
             }
 
             _ = Task.Run(Firewall.AddNetchFwRules);
 
-            try
-            {
-                if (!await StartServer(server, mode))
-                {
+            try {
+                if (!await StartServer(server, mode)) {
                     throw new StartFailedException();
                 }
 
-                if (!await StartMode(server, mode))
-                {
+                if (!await StartMode(server, mode)) {
                     throw new StartFailedException();
                 }
 
@@ -58,29 +50,23 @@ namespace OxygenVPN.Controllers
                     NatTest();
 
                 return true;
-            }
-            catch (Exception e)
-            {
-                switch (e)
-                {
-                    case DllNotFoundException _:
-                    case FileNotFoundException _:
-                        MessageBoxX.Show(e.Message + "\n\n" + i18N.Translate("Missing File or runtime components"), owner: Global.MainForm);
-                        break;
-                    case StartFailedException _:
-                    case PortInUseException _:
-                        break;
-                    default:
-                        Logging.Error($"主控制器未处理异常: {e}");
-                        break;
+            } catch (Exception e) {
+                switch (e) {
+                case DllNotFoundException _:
+                case FileNotFoundException _:
+                    MessageBoxX.Show(e.Message + "\n\n" + i18N.Translate("Missing File or runtime components"), owner: Global.MainForm);
+                    break;
+                case StartFailedException _:
+                case PortInUseException _:
+                    break;
+                default:
+                    Logging.Error($"Exception not handled by main controller: {e}");
+                    break;
                 }
 
-                try
-                {
+                try {
                     await Stop();
-                }
-                catch
-                {
+                } catch {
                     // ignored
                 }
 
@@ -88,10 +74,8 @@ namespace OxygenVPN.Controllers
             }
         }
 
-        private static async Task<bool> StartServer(Server server, Mode mode)
-        {
-            if (server.IsSocks5())
-            {
+        private static async Task<bool> StartServer(Server server, Mode mode) {
+            if (server.IsSocks5()) {
                 return true;
             }
 
@@ -101,8 +85,7 @@ namespace OxygenVPN.Controllers
             PortCheckAndShowMessageBox(Global.Settings.Socks5LocalPort, "Socks5");
 
             Global.MainForm.StatusText(i18N.Translate("Starting ", ServerController.Name));
-            if (await Task.Run(() => ServerController.Start(server, mode)))
-            {
+            if (await Task.Run(() => ServerController.Start(server, mode))) {
                 UsingPorts.Add(StatusPortInfoText.Socks5Port = Global.Settings.Socks5LocalPort);
                 StatusPortInfoText.ShareLan = Global.Settings.LocalAddress == "0.0.0.0";
                 return true;
@@ -111,40 +94,36 @@ namespace OxygenVPN.Controllers
             return false;
         }
 
-        private static async Task<bool> StartMode(Server server, Mode mode)
-        {
+        private static async Task<bool> StartMode(Server server, Mode mode) {
             var port = 0;
-            switch (mode.Type)
-            {
-                case 0:
-                    ModeController = new NFController();
-                    PortCheckAndShowMessageBox(port = Global.Settings.RedirectorTCPPort, "Redirector TCP");
-                    break;
-                case 1:
-                case 2:
-                    ModeController = new TUNTAPController();
-                    break;
-                case 3:
-                case 5:
-                    ModeController = new HTTPController();
-                    PortCheckAndShowMessageBox(port = Global.Settings.HTTPLocalPort, "HTTP");
-                    break;
-                case 4:
-                    return true;
-                default:
-                    Logging.Error("未知模式类型");
-                    return false;
+            switch (mode.Type) {
+            case 0:
+                ModeController = new NFController();
+                PortCheckAndShowMessageBox(port = Global.Settings.RedirectorTCPPort, "Redirector TCP");
+                break;
+            case 1:
+            case 2:
+                ModeController = new TUNTAPController();
+                break;
+            case 3:
+            case 5:
+                ModeController = new HTTPController();
+                PortCheckAndShowMessageBox(port = Global.Settings.HTTPLocalPort, "HTTP");
+                break;
+            case 4:
+                return true;
+            default:
+                Logging.Error("Unknown mode type");
+                return false;
             }
 
             Global.MainForm.StatusText(i18N.Translate("Starting ", ModeController.Name));
-            if (await Task.Run(() => ModeController.Start(server, mode)))
-            {
-                switch (mode.Type)
-                {
-                    case 3:
-                    case 5:
-                        StatusPortInfoText.HttpPort = port;
-                        break;
+            if (await Task.Run(() => ModeController.Start(server, mode))) {
+                switch (mode.Type) {
+                case 3:
+                case 5:
+                    StatusPortInfoText.HttpPort = port;
+                    break;
                 }
 
                 UsingPorts.Add(port);
@@ -157,8 +136,7 @@ namespace OxygenVPN.Controllers
         /// <summary>
         ///     停止
         /// </summary>
-        public static async Task Stop()
-        {
+        public static async Task Stop() {
             UsingPorts.Clear();
 
             _ = Task.Run(() => NTTController.Stop());
@@ -180,10 +158,8 @@ namespace OxygenVPN.Controllers
         /// <param name="portName">端口用途名称</param>
         /// <param name="portType"></param>
         /// <exception cref="PortInUseException"></exception>
-        private static void PortCheckAndShowMessageBox(int port, string portName, PortType portType = PortType.Both)
-        {
-            if (PortInUse(port, portType))
-            {
+        private static void PortCheckAndShowMessageBox(int port, string portName, PortType portType = PortType.Both) {
+            if (PortInUse(port, portType)) {
                 MessageBoxX.Show(i18N.TranslateFormat("The {0} port is in use.", $"{portName} ({port})"));
                 throw new PortInUseException();
             }
@@ -192,21 +168,17 @@ namespace OxygenVPN.Controllers
         /// <summary>
         ///     测试 NAT
         /// </summary>
-        public static void NatTest()
-        {
+        public static void NatTest() {
             NttTested = false;
-            Task.Run(() =>
-            {
+            Task.Run(() => {
                 Global.MainForm.NatTypeStatusText(i18N.Translate("Starting NatTester"));
                 // Thread.Sleep(1000);
                 var (result, localEnd, publicEnd) = NTTController.Start();
 
-                if (!string.IsNullOrEmpty(publicEnd))
-                {
+                if (!string.IsNullOrEmpty(publicEnd)) {
                     var country = Utils.Utils.GetCityCode(publicEnd);
                     Global.MainForm.NatTypeStatusText(result, country);
-                }
-                else
+                } else
                     Global.MainForm.NatTypeStatusText(result ?? "Error");
 
                 NttTested = true;
@@ -214,7 +186,6 @@ namespace OxygenVPN.Controllers
         }
     }
 
-    public class StartFailedException : Exception
-    {
+    public class StartFailedException : Exception {
     }
 }

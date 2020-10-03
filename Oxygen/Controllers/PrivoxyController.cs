@@ -1,19 +1,15 @@
 ﻿using System.IO;
 using OxygenVPN.Models;
 
-namespace OxygenVPN.Controllers
-{
-    public class PrivoxyController : Controller
-    {
-        public PrivoxyController()
-        {
+namespace OxygenVPN.Controllers {
+    public class PrivoxyController : Controller {
+        public PrivoxyController() {
             Name = "Privoxy";
             MainFile = "Privoxy.exe";
             RedirectStd = false;
         }
 
-        public bool Start(Server server, Mode mode)
-        {
+        public bool Start(Server server, Mode mode) {
             var text = File.ReadAllText("bin\\default.conf")
                 .Replace("_BIND_PORT_", Global.Settings.HTTPLocalPort.ToString())
                 .Replace("_DEST_PORT_", (server.IsSocks5() ? server.Port : Global.Settings.Socks5LocalPort).ToString())
@@ -25,8 +21,7 @@ namespace OxygenVPN.Controllers
             return StartInstanceAuto("..\\data\\privoxy.conf");
         }
 
-        public override void Stop()
-        {
+        public override void Stop() {
             StopInstance();
         }
     }

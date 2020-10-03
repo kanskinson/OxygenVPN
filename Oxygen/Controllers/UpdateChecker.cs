@@ -5,17 +5,15 @@ using OxygenVPN.Models.GitHubRelease;
 using OxygenVPN.Utils;
 using Newtonsoft.Json;
 
-namespace OxygenVPN.Controllers
-{
-    public class UpdateChecker
-    {
+namespace OxygenVPN.Controllers {
+    public class UpdateChecker {
         public const string Owner = @"kanskinson";
         public const string Repo = @"OxygenVPN";
 
         public const string Name = @"OxygenVPN";
         public const string Copyright = @"Copyright © 2020";
 
-        public const string AssemblyVersion = @"1.2.6.1";   //The lastest num is always '1', and the tag of github release is always '0'
+        public const string AssemblyVersion = @"1.2.7.1";   //The lastest num is always '1', and the tag of github release is always '0'
         private const string Suffix = @"Release";
 
         public static readonly string Version = $"{AssemblyVersion}{(string.IsNullOrEmpty(Suffix) ? "" : $"-{Suffix}")}";
@@ -28,10 +26,8 @@ namespace OxygenVPN.Controllers
         public event EventHandler NewVersionFoundFailed;
         public event EventHandler NewVersionNotFound;
 
-        public async void Check(bool isPreRelease)
-        {
-            try
-            {
+        public async void Check(bool isPreRelease) {
+            try {
                 var updater = new GitHubRelease(Owner, Repo);
                 var url = updater.AllReleaseUrl;
 
@@ -45,23 +41,17 @@ namespace OxygenVPN.Controllers
                 Logging.Info($"Github lastest release: {latestRelease.tag_name}");
                 int compareVer = VersionUtil.CompareVersion(latestRelease.tag_name, AssemblyVersion);
                 Logging.Info($"New version newer:{compareVer}");
-                if (compareVer > 0)
-                {
+                if (compareVer > 0) {
                     Logging.Info("New version found");
                     NewVersionFound?.Invoke(this, new EventArgs());
-                }
-                else
-                {
+                } else {
                     Logging.Info("This is the latest version");
                     NewVersionNotFound?.Invoke(this, new EventArgs());
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 if (e is WebException)
-                    Logging.Warning($"Update Failed: {e.Message}");
-                else
-                {
+                    Logging.Warning($"Update failed: {e.Message}");
+                else {
                     Logging.Warning(e.ToString());
                 }
 

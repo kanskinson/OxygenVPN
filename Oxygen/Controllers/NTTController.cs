@@ -3,17 +3,14 @@ using System.Diagnostics;
 using System.Linq;
 using OxygenVPN.Utils;
 
-namespace OxygenVPN.Controllers
-{
-    public class NTTController : Controller
-    {
+namespace OxygenVPN.Controllers {
+    public class NTTController : Controller {
         private string _localEnd;
         private string _publicEnd;
         private string _result;
         private string _bindingTest;
 
-        public NTTController()
-        {
+        public NTTController() {
             Name = "NTT";
             MainFile = "NTT.exe";
         }
@@ -22,12 +19,10 @@ namespace OxygenVPN.Controllers
         ///     启动 NatTypeTester
         /// </summary>
         /// <returns></returns>
-        public (string, string, string) Start()
-        {
+        public (string, string, string) Start() {
             _result = _localEnd = _publicEnd = null;
 
-            try
-            {
+            try {
                 InitInstance($" {Global.Settings.STUN_Server} {Global.Settings.STUN_Server_Port}");
                 Instance.OutputDataReceived += OnOutputDataReceived;
                 Instance.ErrorDataReceived += OnOutputDataReceived;
@@ -38,16 +33,11 @@ namespace OxygenVPN.Controllers
                 if (_bindingTest == "Fail")
                     _result = "UdpBlocked";
                 return (_result, _localEnd, _publicEnd);
-            }
-            catch (Exception e)
-            {
-                Logging.Error($"{Name} 控制器出错:\n" + e);
-                try
-                {
+            } catch (Exception e) {
+                Logging.Error($"{Name} controller error:\n" + e);
+                try {
                     Stop();
-                }
-                catch
-                {
+                } catch {
                     // ignored
                 }
 
@@ -55,8 +45,7 @@ namespace OxygenVPN.Controllers
             }
         }
 
-        private new void OnOutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
+        private new void OnOutputDataReceived(object sender, DataReceivedEventArgs e) {
             if (string.IsNullOrEmpty(e.Data)) return;
             Logging.Info($"[NTT] {e.Data}");
 
@@ -65,32 +54,30 @@ namespace OxygenVPN.Controllers
                 return;
             var key = str[0];
             var value = str[1];
-            switch (key)
-            {
-                case "Other address is":
-                case "Nat mapping behavior":
-                case "Nat filtering behavior":
-                    break;
-                case "Binding test":
-                    _bindingTest = value;
-                    break;
-                case "Local address":
-                    _localEnd = value;
-                    break;
-                case "Mapped address":
-                    _publicEnd = value;
-                    break;
-                case "result":
-                    _result = value;
-                    break;
-                default:
-                    _result = str.Last();
-                    break;
+            switch (key) {
+            case "Other address is":
+            case "Nat mapping behavior":
+            case "Nat filtering behavior":
+                break;
+            case "Binding test":
+                _bindingTest = value;
+                break;
+            case "Local address":
+                _localEnd = value;
+                break;
+            case "Mapped address":
+                _publicEnd = value;
+                break;
+            case "result":
+                _result = value;
+                break;
+            default:
+                _result = str.Last();
+                break;
             }
         }
 
-        public override void Stop()
-        {
+        public override void Stop() {
             StopInstance();
         }
     }

@@ -2,12 +2,9 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace OxygenVPN.Controllers
-{
-    public class DNSController : Controller
-    {
-        public DNSController()
-        {
+namespace OxygenVPN.Controllers {
+    public class DNSController : Controller {
+        public DNSController() {
             Name = "DNS Service";
             RedirectStd = false;
         }
@@ -16,8 +13,7 @@ namespace OxygenVPN.Controllers
         ///     启动DNS服务
         /// </summary>
         /// <returns></returns>
-        public bool Start()
-        {
+        public bool Start() {
             if (!aiodns_dial(Encoding.UTF8.GetBytes(Path.GetFullPath("bin\\china_site_list")),
                 Encoding.UTF8.GetBytes("223.5.5.5:53"),
                 Encoding.UTF8.GetBytes("1.1.1.1:53"))
@@ -27,8 +23,7 @@ namespace OxygenVPN.Controllers
                 aiodns_init();
         }
 
-        public override void Stop()
-        {
+        public override void Stop() {
             aiodns_free();
         }
 

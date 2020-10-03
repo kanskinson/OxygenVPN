@@ -32,20 +32,20 @@ namespace OxygenVPN.ServerEx.Shadowsocks
                 if (!ShadowsocksDLL.Info(client, remote, passwd, method))
                 {
                     State = State.Stopped;
-                    Logging.Error("DLL SS INFO 设置失败！");
+                    Logging.Error("DLL SS INFO setup successfully！");
                     return false;
                 }
 
-                Logging.Info("DLL SS INFO 设置成功！");
+                Logging.Info("DLL SS INFO setup successfully!");
 
                 if (!ShadowsocksDLL.Start())
                 {
                     State = State.Stopped;
-                    Logging.Error("DLL SS 启动失败！");
+                    Logging.Error("DLL SS start successfully!");
                     return false;
                 }
 
-                Logging.Info("DLL SS 启动成功！");
+                Logging.Info("DLL SS start successfully!");
                 State = State.Started;
                 return true;
             }

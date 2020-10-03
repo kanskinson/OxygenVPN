@@ -98,30 +98,24 @@ namespace OxygenVPN.Forms
             }
         }
 
-        public void NatTypeStatusText(string text = "", string country = "")
-        {
-            if (InvokeRequired)
-            {
+        public void NatTypeStatusText(string text = "", string country = "") {
+            if (InvokeRequired) {
                 BeginInvoke(new Action<string, string>(NatTypeStatusText), text, country);
                 return;
             }
 
-            if (State != State.Started)
-            {
+            if (State != State.Started) {
                 labelNat.Text = "--";
                 labelNatLight.Visible = false;
                 return;
             }
 
-            if (!string.IsNullOrEmpty(text))
-            {
+            if (!string.IsNullOrEmpty(text)) {
                 labelNat.Text = $"{text} {(country != string.Empty ? $"[{country}]" : "")}"; ;
-                
+
                 UpdateNatTypeLight(int.TryParse(text, out var natType) ? natType : -1);
-            }
-            else
-            {
-                labelNat.Text= $@"NAT{i18N.Translate(": ", "Test failed")}";
+            } else {
+                labelNat.Text = $@"NAT{i18N.Translate(": ", "Test failed")}";
             }
 
         }
