@@ -72,8 +72,7 @@ namespace OxygenVPN.Forms
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = Path.Combine(Global.OxygenVPNDir, "OxygenUpdater.exe"),
-                    Arguments =
-                        $"{Global.Settings.UDPSocketPort} {fileFullPath} {Global.OxygenVPNDir}"
+                    Arguments = $"{Global.Settings.UDPSocketPort} \"{fileFullPath}\" \"{Global.OxygenVPNDir}\""
                 });
             }
         }

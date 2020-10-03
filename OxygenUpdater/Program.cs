@@ -9,44 +9,42 @@ using System.Text;
 using System.Threading;
 
 namespace OxygenUpdater {
-    internal class Program
-    {
+    internal class Program {
         private static readonly string UpdaterFullName;
         private static readonly string UpdaterDirectory;
         private static readonly string UpdaterFriendlyName;
         private static readonly Process CurrentProcess;
 
-        static Program()
-        {
+        static Program() {
             CurrentProcess = Process.GetCurrentProcess();
             UpdaterFullName = CurrentProcess.MainModule.FileName;
             UpdaterDirectory = Path.GetDirectoryName(UpdaterFullName);
             UpdaterFriendlyName = Path.GetFileName(UpdaterFullName);
         }
 
-        public static void Main(string[] args)
-        {
+        public static void Main(string[] args) {
             var result = false;
 
-            try
-            {
+            try {
                 #region Check Arguments
 
-                if (CurrentProcess.MainModule == null)
-                {
+                if (CurrentProcess.MainModule == null) {
                     Console.WriteLine("Current Process MainModule is null");
                     return;
                 }
 
-                if (args.Length != 3)
-                {
+                Console.WriteLine(args.Length + "\r\n");
+                foreach (var item in args) {
+                    Console.WriteLine(item + "\r\n");
+                }
+
+                if (args.Length != 3) {
                     Console.WriteLine("The program is not user-oriented\n此程序不是面向用户的");
                     return;
                 }
 
                 // arg0 port
-                if (!int.TryParse(args[0], out var port))
-                {
+                if (!int.TryParse(args[0], out var port)) {
                     Console.WriteLine("arg0 Port Parse failed");
                     return;
                 }
@@ -54,36 +52,30 @@ namespace OxygenUpdater {
                 var updateExtracted = true;
                 // arg1 update File/Directory
                 var updatePath = Path.GetFullPath(args[1]);
-                if (File.Exists(updatePath))
-                {
+                if (File.Exists(updatePath)) {
                     updateExtracted = false;
-                }
-                else if (!Directory.Exists(updatePath))
-                {
+                } else if (!Directory.Exists(updatePath)) {
                     Console.WriteLine("arg1 update file/directory Not found");
                     return;
                 }
 
                 // arg2 target Directory
                 string targetPath;
-                if (!File.Exists(Path.Combine(targetPath = Path.GetFullPath(args[2]), "OxygenVPN.exe")))
-                {
+                if (!File.Exists(Path.Combine(targetPath = Path.GetFullPath(args[2]), "OxygenVPN.exe"))) {
                     Console.Write("arg2 OxygenVPN Directory doesn't seems right");
                     return;
                 }
 
                 #region if under target Directory,then rerun in temp directory
 
-                if (UpdaterDirectory.StartsWith(targetPath))
-                {
+                if (UpdaterDirectory.StartsWith(targetPath)) {
                     // Updater 在目标目录下
                     // 将程序复制到临时目录，传递参数
                     var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
                     var newUpdaterPath = Path.Combine(tempPath, UpdaterFriendlyName);
                     Directory.CreateDirectory(tempPath);
                     File.Copy(UpdaterFullName, newUpdaterPath);
-                    Process.Start(new ProcessStartInfo
-                    {
+                    Process.Start(new ProcessStartInfo {
                         FileName = newUpdaterPath,
                         Arguments = $"{port} {updatePath} {targetPath}",
                         WorkingDirectory = tempPath,
@@ -106,29 +98,21 @@ namespace OxygenUpdater {
                 #region Send Netch Exit command
 
                 Process[] _;
-                if ((_ = Process.GetProcessesByName("OxygenVPN")).Any())
-                {
+                if ((_ = Process.GetProcessesByName("OxygenVPN")).Any()) {
                     Console.WriteLine("Found OxygenVPN process, Send exit command");
-                    try
-                    {
+                    try {
                         var udpClient = new UdpClient("127.0.0.1", port);
                         var sendBytes = Encoding.ASCII.GetBytes("Exit");
                         udpClient.Send(sendBytes, sendBytes.Length);
-                    }
-                    catch
-                    {
+                    } catch {
                         Console.WriteLine("Send command failed");
                         return;
                     }
 
-                    foreach (var proc in _)
-                    {
-                        try
-                        {
+                    foreach (var proc in _) {
+                        try {
                             proc.WaitForExit();
-                        }
-                        catch (Exception)
-                        {
+                        } catch (Exception) {
                             // ignored
                         }
                     }
@@ -137,11 +121,9 @@ namespace OxygenUpdater {
                 #endregion
 
                 var counter = 0;
-                while (!TestFileFree(Path.Combine(targetPath, "OxygenVPN.exe")))
-                {
+                while (!TestFileFree(Path.Combine(targetPath, "OxygenVPN.exe"))) {
                     // wait 5 sec
-                    if (counter > 25)
-                    {
+                    if (counter > 25) {
                         Console.WriteLine("Waiting OxygenVPN exit timeout");
                         return;
                     }
@@ -153,15 +135,13 @@ namespace OxygenUpdater {
                 #region Update
 
                 string extractPath = null;
-                if (!updateExtracted)
-                {
+                if (!updateExtracted) {
                     extractPath = Path.Combine(UpdaterDirectory, "extract");
                     Extract(updatePath, extractPath, true);
 
                     var netchExeFileInfo = FindFile("OxygenVPN.exe", extractPath);
 
-                    if (netchExeFileInfo == null)
-                    {
+                    if (netchExeFileInfo == null) {
                         throw new Exception("OxygenVPN.exe not found in archive!");
                     }
 
@@ -170,13 +150,10 @@ namespace OxygenUpdater {
 
                 MoveDirectory(updatePath, targetPath, true);
 
-                try
-                {
+                try {
                     if (extractPath != null)
                         Directory.Delete(extractPath, true);
-                }
-                catch
-                {
+                } catch {
                     // ignored
                 }
 
@@ -185,8 +162,7 @@ namespace OxygenUpdater {
                 #region Finished Update,Start Netch
 
                 Console.WriteLine("Start OxygenVPN");
-                Process.Start(new ProcessStartInfo
-                {
+                Process.Start(new ProcessStartInfo {
                     FileName = Path.Combine(targetPath, "OxygenVPN.exe"),
                     UseShellExecute = true,
                 });
@@ -194,25 +170,19 @@ namespace OxygenUpdater {
                 #endregion
 
                 result = true;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 if (e is InvalidDataException)
                     Console.WriteLine("Archive file Broken");
                 Console.WriteLine(e.ToString());
-            }
-            finally
-            {
-                if (!result)
-                {
+            } finally {
+                if (!result) {
                     Console.WriteLine("Press any key to exit...");
                     Console.Read();
                 }
             }
         }
 
-        private static void Extract(string archiveFileName, string destDirName, bool overwrite)
-        {
+        private static void Extract(string archiveFileName, string destDirName, bool overwrite) {
             archiveFileName = Path.GetFullPath(archiveFileName);
             destDirName = Path.GetFullPath(destDirName);
 
@@ -224,8 +194,7 @@ namespace OxygenUpdater {
             if (overwrite)
                 argument.Append(" -y ");
 
-            Process.Start(new ProcessStartInfo
-            {
+            Process.Start(new ProcessStartInfo {
                 UseShellExecute = false,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 FileName = Path.GetFullPath("7za.exe"),
@@ -233,38 +202,27 @@ namespace OxygenUpdater {
             })?.WaitForExit();
         }
 
-        public static FileInfo FindFile(string filename, string directory)
-        {
+        public static FileInfo FindFile(string filename, string directory) {
             var DirStack = new Stack<string>();
             DirStack.Push(directory);
 
-            while (DirStack.Count > 0)
-            {
+            while (DirStack.Count > 0) {
                 var DirInfo = new DirectoryInfo(DirStack.Pop());
-                try
-                {
-                    foreach (var DirChildInfo in DirInfo.GetDirectories())
-                    {
+                try {
+                    foreach (var DirChildInfo in DirInfo.GetDirectories()) {
                         DirStack.Push(DirChildInfo.FullName);
                     }
-                }
-                catch
-                {
+                } catch {
                     // ignored
                 }
 
-                try
-                {
-                    foreach (var FileChildInfo in DirInfo.GetFiles())
-                    {
-                        if (FileChildInfo.Name == filename)
-                        {
+                try {
+                    foreach (var FileChildInfo in DirInfo.GetFiles()) {
+                        if (FileChildInfo.Name == filename) {
                             return FileChildInfo;
                         }
                     }
-                }
-                catch
-                {
+                } catch {
                     // ignored
                 }
             }
@@ -272,77 +230,55 @@ namespace OxygenUpdater {
             return null;
         }
 
-        private static void MoveDirectory(string sourceDirName, string destDirName, bool overwrite)
-        {
+        private static void MoveDirectory(string sourceDirName, string destDirName, bool overwrite) {
             sourceDirName = Path.GetFullPath(sourceDirName);
             destDirName = Path.GetFullPath(destDirName);
-            if (!overwrite)
-            {
+            if (!overwrite) {
                 Directory.Move(sourceDirName, destDirName);
-            }
-            else
-            {
+            } else {
                 var dirStack = new Stack<string>();
                 dirStack.Push(sourceDirName);
 
-                while (dirStack.Count > 0)
-                {
+                while (dirStack.Count > 0) {
                     var dirInfo = new DirectoryInfo(dirStack.Pop());
-                    try
-                    {
-                        foreach (var dirChildInfo in dirInfo.GetDirectories())
-                        {
+                    try {
+                        foreach (var dirChildInfo in dirInfo.GetDirectories()) {
                             var destPath = dirChildInfo.FullName.Replace(sourceDirName, destDirName);
-                            try
-                            {
-                                if (!Directory.Exists(destPath))
-                                {
+                            try {
+                                if (!Directory.Exists(destPath)) {
                                     Directory.CreateDirectory(destPath);
                                 }
-                            }
-                            catch (Exception e)
-                            {
+                            } catch (Exception e) {
                                 Console.WriteLine($"Create {destPath} Folder Error: {e.Message}");
                             }
 
                             dirStack.Push(dirChildInfo.FullName);
                         }
 
-                        foreach (var fileChildInfo in dirInfo.GetFiles())
-                        {
+                        foreach (var fileChildInfo in dirInfo.GetFiles()) {
                             var destPath = fileChildInfo.FullName.Replace(sourceDirName, destDirName);
-                            try
-                            {
-                                if (File.Exists(destPath))
-                                {
+                            try {
+                                if (File.Exists(destPath)) {
                                     File.Delete(destPath);
                                 }
 
                                 fileChildInfo.MoveTo(destPath);
-                            }
-                            catch (Exception e)
-                            {
+                            } catch (Exception e) {
                                 Console.WriteLine($"Move {fileChildInfo.FullName} To {destPath} Error: {e.Message}");
                             }
                         }
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         Console.WriteLine($"ERROR:{e.Message}");
                     }
                 }
             }
         }
 
-        private static bool TestFileFree(string FileName)
-        {
-            try
-            {
+        private static bool TestFileFree(string FileName) {
+            try {
                 File.Move(FileName, FileName);
                 return true;
-            }
-            catch
-            {
+            } catch {
                 return false;
             }
         }
