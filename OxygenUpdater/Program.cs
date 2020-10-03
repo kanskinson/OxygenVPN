@@ -33,11 +33,6 @@ namespace OxygenUpdater {
                     return;
                 }
 
-                Console.WriteLine(args.Length + "\r\n");
-                foreach (var item in args) {
-                    Console.WriteLine(item + "\r\n");
-                }
-
                 if (args.Length != 3) {
                     Console.WriteLine("The program is not user-oriented\n此程序不是面向用户的");
                     return;
