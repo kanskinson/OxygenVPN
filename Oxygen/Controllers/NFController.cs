@@ -79,7 +79,10 @@ namespace OxygenVPN.Controllers {
             if (Global.Settings.ModifySystemDNS) {
                 // 备份并替换系统 DNS
                 _sysDns = DNS.OutboundDNS;
-                DNS.OutboundDNS = "1.1.1.1,8.8.8.8";
+                if (string.IsNullOrWhiteSpace(Global.Settings.ModifiedDNS)) {
+                    Global.Settings.ModifiedDNS = "1.1.1.1,8.8.8.8";
+                }
+                DNS.OutboundDNS = Global.Settings.ModifiedDNS;
             }
 
             return aio_init();

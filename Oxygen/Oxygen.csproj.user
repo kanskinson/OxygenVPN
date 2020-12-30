@@ -5,9 +5,6 @@
     <Compile Update="Forms\GlobalBypassIPForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Utils\LoggingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -18,21 +15,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\SubscribeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="ServerEx\ShadowsocksR\Form\ShadowsocksRForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="ServerEx\Shadowsocks\Form\ShadowsocksForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="ServerEx\Socks5\Form\Socks5Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="ServerEx\Trojan\Form\TrojanForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="ServerEx\VMess\Form\VMessForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

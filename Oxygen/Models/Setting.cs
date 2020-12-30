@@ -101,9 +101,29 @@ namespace OxygenVPN.Models {
         public bool ModifySystemDNS = false;
 
         /// <summary>
+        ///     要修改为的系统 DNS
+        /// </summary>
+        public string ModifiedDNS = "1.1.1.1,8.8.8.8";
+
+        /// <summary>
+        ///     解析服务器主机名
+        /// </summary>
+        public bool ResolveServerHostname = false;
+
+        /// <summary>
         ///     网页请求超时 毫秒
         /// </summary>
         public int RequestTimeout = 10000;
+
+        /// <summary>
+        ///     PAC URL
+        /// </summary>
+        public string Pac_Url = "";
+
+        /// <summary>
+        ///     PAC端口
+        /// </summary>
+        public int Pac_Port = 2803;
 
         /// <summary>
         ///		HTTP 本地端口
@@ -191,13 +211,19 @@ namespace OxygenVPN.Models {
         public string ACL = "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/banAD.acl";
 
         /// <summary>
+        ///     GFWList
+        /// </summary>
+        public string GFWLIST = "https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt";
+
+        /// <summary>
         ///     是否使用DLL启动Shadowsocks
         /// </summary>
-        public bool BootShadowsocksFromDLL = false;
+        public bool BootShadowsocksFromDLL = true;
 
         /// <summary>
         ///     语言设置
         /// </summary>
         public string Language = "System";
+
     }
 }

@@ -35,6 +35,11 @@ namespace OxygenVPN.Controllers {
                 return false;
             }
 
+            if (Global.Settings.ResolveServerHostname && DNS.Lookup(server.Hostname) == null) {
+                MessageBoxX.Show("Lookup Server hostname failed");
+                return false;
+            }
+
             _ = Task.Run(Firewall.AddNetchFwRules);
 
             try {

@@ -50,6 +50,8 @@ namespace OxygenVPN.Forms
             BootShadowsocksFromDLLCheckBox.Checked = Global.Settings.BootShadowsocksFromDLL;
             CheckBetaUpdateCheckBox.Checked = Global.Settings.CheckBetaUpdate;
             ModifySystemDNSCheckBox.Checked = Global.Settings.ModifySystemDNS;
+            ModifiedDNSTextBox.Text = Global.Settings.ModifiedDNS;
+            ResolveServerHostnameCheckBox.Checked = Global.Settings.ResolveServerHostname;
             UpdateSubscribeatWhenOpenedCheckBox.Checked = Global.Settings.UpdateSubscribeatWhenOpened;
 
             ProfileCountTextBox.Text = Global.Settings.ProfileCount.ToString();
@@ -309,6 +311,8 @@ namespace OxygenVPN.Forms
             Global.Settings.CheckUpdateWhenOpened = CheckUpdateWhenOpenedCheckBox.Checked;
             Global.Settings.BootShadowsocksFromDLL = BootShadowsocksFromDLLCheckBox.Checked;
             Global.Settings.CheckBetaUpdate = CheckBetaUpdateCheckBox.Checked;
+            Global.Settings.ModifiedDNS = ModifiedDNSTextBox.Text;
+            Global.Settings.ResolveServerHostname = ResolveServerHostnameCheckBox.Checked;
             Global.Settings.ModifySystemDNS = ModifySystemDNSCheckBox.Checked;
             Global.Settings.UpdateSubscribeatWhenOpened = UpdateSubscribeatWhenOpenedCheckBox.Checked;
 

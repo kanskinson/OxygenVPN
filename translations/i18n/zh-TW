@@ -159,6 +159,7 @@
   "Check Beta update": "檢查 Beta 更新",
   "Update subscribeat when opened": "自動更新訂閱",
   "SS DLL(No ACL support)": "SS DLL(不支援 ACL)",
+    "Resolve Server Hostname": "解析服務主機名",
   "Modify System DNS": "修改系統 DNS",
   "ProfileCount": "設定檔數量",
   "ProfileCount value illegal. Try again.": "無效的設定檔數值，請重試。",

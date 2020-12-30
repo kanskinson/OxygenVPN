@@ -105,12 +105,66 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>Settings.settings</DependentUpon>
         </Compile>
+        <Compile Update="ServerEx\ShadowsocksR\Form\ShadowsocksRForm.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="ServerEx\ShadowsocksR\Form\ShadowsocksRForm.Designer.cs">
+          <DependentUpon>ShadowsocksRForm.cs</DependentUpon>
+        </Compile>
+        <Compile Update="ServerEx\Shadowsocks\Form\ShadowsocksForm.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="ServerEx\Shadowsocks\Form\ShadowsocksForm.Designer.cs">
+          <DependentUpon>ShadowsocksForm.cs</DependentUpon>
+        </Compile>
+        <Compile Update="ServerEx\Socks5\Form\Socks5Form.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="ServerEx\Socks5\Form\Socks5Form.Designer.cs">
+          <DependentUpon>Socks5Form.cs</DependentUpon>
+        </Compile>
+        <Compile Update="ServerEx\Trojan\Form\TrojanForm.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="ServerEx\Trojan\Form\TrojanForm.Designer.cs">
+          <DependentUpon>TrojanForm.cs</DependentUpon>
+        </Compile>
+        <Compile Update="ServerEx\VMess\Form\VMessForm.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="ServerEx\VMess\Form\VMessForm.Designer.cs">
+          <DependentUpon>VMessForm.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Utils\LoggingForm.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="Utils\LoggingForm.Designer.cs">
+          <DependentUpon>LoggingForm.cs</DependentUpon>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Update="Properties\Resources.resx">
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="ServerEx\ShadowsocksR\Form\ShadowsocksRForm.resx">
+          <DependentUpon>ShadowsocksRForm.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="ServerEx\Shadowsocks\Form\ShadowsocksForm.resx">
+          <DependentUpon>ShadowsocksForm.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="ServerEx\Socks5\Form\Socks5Form.resx">
+          <DependentUpon>Socks5Form.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="ServerEx\Trojan\Form\TrojanForm.resx">
+          <DependentUpon>TrojanForm.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="ServerEx\VMess\Form\VMessForm.resx">
+          <DependentUpon>VMessForm.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Utils\LoggingForm.resx">
+          <DependentUpon>LoggingForm.cs</DependentUpon>
         </EmbeddedResource>
     </ItemGroup>
 

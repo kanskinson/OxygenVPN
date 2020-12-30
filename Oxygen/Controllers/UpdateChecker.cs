@@ -13,7 +13,7 @@ namespace OxygenVPN.Controllers {
         public const string Name = @"OxygenVPN";
         public const string Copyright = @"Copyright © 2020";
 
-        public const string AssemblyVersion = @"1.2.7.1";   //The lastest num is always '1', and the tag of github release is always '0'
+        public const string AssemblyVersion = @"1.2.8.1";   //The lastest num is always '1', and the tag of github release is always '0'
         private const string Suffix = @"Release";
 
         public static readonly string Version = $"{AssemblyVersion}{(string.IsNullOrEmpty(Suffix) ? "" : $"-{Suffix}")}";
